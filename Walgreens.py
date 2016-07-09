@@ -3,6 +3,8 @@
 #imports
 
 import argparse
+import time
+import random
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 
@@ -11,18 +13,19 @@ from selenium.webdriver.common.action_chains import ActionChains
 ##ap.add_argument("-n", "--number", required=True)
 ##ap.add_argument("-p", "--password", required=True)
 ##args = vars(ap.parse_args())
-args["numbers"] = "0426-0014-815"
+args = {}
+args["number"] = "0426-0014-815"
 args["password"] = "5160-7070-321"
-##survey1, survey2, survey3 = args["number"].split("-")
-##password1, password2, password3 = args["password"].split("-")
+survey1, survey2, survey3 = args["number"].split("-")
+password1, password2, password3 = args["password"].split("-")
 
-survey1 = '0426'
-survey2 = '0019'
-survey3 = '223'
+# survey1 = '0426'
+# survey2 = '0019'
+# survey3 = '223'
 
-password1 = '2160'
-password2 = '6140'
-password3 = '321'
+# password1 = '2160'
+# password2 = '6140'
+# password3 = '321'
 
 browser = webdriver.Firefox()
 browser.get('http://www.wagcares.com/websurvey/app?gateway=Walgreens')
@@ -32,6 +35,7 @@ action = ActionChains(browser)
 action.move_to_element_with_offset(english,50,300)
 action.click()
 action.perform()
+time.sleep(1)
 # enter survey information
 survey = browser.find_element_by_id("pbox1")
 survey.send_keys(survey1)
@@ -49,3 +53,10 @@ password.send_keys(password3)
 # submit information
 submit = browser.find_element_by_id("ImageSubmit")
 submit.click()
+submit = browser.find_element_by_id("ImageSubmit")
+submit.click()
+answers = []
+for i in range(10):
+	answers.append(random.randint(9))
+
+print(answers)
