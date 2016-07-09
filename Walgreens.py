@@ -53,10 +53,24 @@ password.send_keys(password3)
 # submit information
 submit = browser.find_element_by_id("ImageSubmit")
 submit.click()
-submit = browser.find_element_by_id("ImageSubmit")
-submit.click()
-answers = []
-for i in range(10):
-	answers.append(random.randint(9))
-
-print(answers)
+try:
+	submit = browser.find_element_by_id("ImageSubmit")
+	submit.click()
+	answers = []
+	for i in range(10):
+		answers.append(random.randint(7,9))
+	browser.find_element_by_id("For_{0}".format(answers[0])).click()
+	browser.find_element_by_id("ImageSubmit").click()
+	
+	browser.find_element_by_id("For_{0}".format(answers[1])).click()
+	browser.find_element_by_id("ImageSubmit").click()
+	
+	browser.find_element_by_id("For_{0}".format(answers[2])).click()
+	browser.find_element_by_id("ImageSubmit").click()
+	
+	browser.find_element_by_id("For_{0}".format(answers[3])).click()
+	browser.find_element_by_id("ImageSubmit").click()
+	
+except:
+	browser.close()
+	print("The codes have expired")
