@@ -1,5 +1,3 @@
-#Walgreens.py -n "0426-0019-223" -p "2160-6140-321"
-
 import argparse, time, random, sys, tkinter as tk
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
