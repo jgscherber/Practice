@@ -1,5 +1,4 @@
 # Python
 Adding work to practice with github
 
-Random Python stuff
-http://rosettacode.org/wiki/Category:Python
+Random code, mainly walkthroughs, Python stuff is independent
