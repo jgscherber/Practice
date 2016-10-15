@@ -16,14 +16,17 @@ def largest_prods():
             for i in range(j+1):
                 if product[i] != product[j]:
                     break
-                if i > (len(product)//2):
+                if i == (len(product)//2):
                     new_largest = product
                 j-=1
-            if new_largest > largest:
-                largest = new_largest
+            
+            # originally had a string comparing to an into. Found the largest ord
+            # 99999
+            if int(new_largest) > largest:
+                largest = int(new_largest)
                 lp1 = p1
                 lp2 = p2
     return largest, lp1, lp2
     
-# largest: 99,999 = 123 x 813
+# largest: 906609 = 913 x 993
 print(largest_prods())
