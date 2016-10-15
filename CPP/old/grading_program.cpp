@@ -16,9 +16,13 @@ int main(){
     // truncates grade to first digit for switch statement
     grade = grade/10;
     switch(grade){
-        case 6: std::cout<<"You got an D"<<std::endl;        
+        // switch executes everything below it, need to break out
+        case 6: std::cout<<"You got an D"<<std::endl;
+                break; 
         case 7: std::cout<<"You got an C"<<std::endl;
+                break; 
         case 8: std::cout<<"You got an B"<<std::endl;
+                break; 
         case 9: std::cout<<"You got an A"<<std::endl;
                 break;  
         default: std::cout<<"You got an F"<<std::endl;

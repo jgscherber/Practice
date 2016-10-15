@@ -8,3 +8,26 @@ If instead your program uses a switch statement, modify it to use if/else-if sta
 
 Modify the program so that if the user enters a choice other than 1-5 then it will output 
 "Error. choice was not valid, here is your money back." */
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+int main()
+{
+    
+  int choice;  
+  string pops[] = {"Coke", "Water", "Sprite", "Cherry Coke", "Mountain Dew"};
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    return 0;
+}
