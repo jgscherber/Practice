@@ -1,41 +1,41 @@
+"""
+The prime factors of 13195 are 5, 7, 13 and 29.
+
+What is the largest prime factor of the number 600851475143 ?
+"""
 import math
-##    
-##def find_factors(value, primes):
-##  
-##    for i in reversed(primes):
-##        if value%i < 0.00001:
-##            return i
-##            break
-        
 # number is too large to run
 # Python 32 bit largest: 2^31 - 1 = 2147483647
 # Python 64 bit largest: 2^63 - 1 = 9223372036854775807
 # couldresize to decimal (e.g. 600851.475143) --> rounding is too messy...
 
-# divide by 2, no divisor can be bigger than half
-
-# answer per Stack Overflow --- ungoldly slow
-# maybe a recursion?
 def find_primes(value):
-    sqrted = int(math.ceil(math.sqrt(value)))
-    factors = [i for i in range(3,sqrted,2)]
-    
-    for i in factors:
-        j = i
-        while j < value:
-            j += i            
-            if factors.count(j) > 0:
-                del factors[factors.index(j)]
-    return factors
+    prime_fac = []
+    primeB = True
+    for prime in value:
+        for i in range(2,prime):
+            if prime%i==0:
+                primeB=False
+                break
+        if primeB:
+             prime_fac.append(prime)
+    return max(prime_fac)
 
-def find_top_prime(value, factors):
-    for i in factors:
-        if value%i==0:
-            while value%i==0:
-                value = int(value / i)
-                if value in factors:
-                    return value
-    
+
+def find_factors(value):
+    sqrted = int(math.ceil(math.sqrt(value)))
+    factors = []
+    while value != 1:
+        for i in range(2,sqrted+1):
+            if value%i == 0:
+                factors.append(i)
+                value = value/i
+                break
+        
+    return factors
+                
+#test = 13195    
 test = 600851475143
-print(find_top_prime(test, find_primes(test)))
+factors = find_factors(test)
+print(find_primes(factors))
 
