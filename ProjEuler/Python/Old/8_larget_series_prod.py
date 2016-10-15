@@ -50,9 +50,20 @@ STRthousand = "73167176531330624919225119674426574742355349194934\
 
 # iterate in groups of 4, converting to int and then multiply, checking if it's
 # new largest
+largest = 0
 
-
-
+for i in range((len(STRthousand)-12)):
+    product = 1
+    for j in range(13):
+        k = i+j
+        #print(k,i,j)
+        product *= int(STRthousand[k])
+        
+    
+    if product > largest:
+        largest = product
+print(largest)
+# Answer: 23514624000
 
 
 
