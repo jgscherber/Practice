@@ -16,13 +16,14 @@ using namespace std;
 int main()
 {
     
-  int choice;  
-  string pops[] = {"Coke", "Water", "Sprite", "Cherry Coke", "Mountain Dew"};
-  
-    
-    
-    
-    
+    int choice;  
+    string pops[] = {"Coke", "Water", "Sprite", "Cherry Coke", "Mountain Dew"};
+    cout<<"Chose one of the pops:";
+    for(int i=0; i<5; i++)
+        cout<<" "<<pops[i];
+    cout<<endl;
+    cin>>choice;
+    cout<<endl<<"You chose: "<<pops[choice-1]<<endl;
     
     
     
