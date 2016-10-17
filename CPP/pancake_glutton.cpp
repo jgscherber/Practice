@@ -12,3 +12,4 @@ Person 3: ate 7 pancakes
 Person 8: ate 4 pancakes
 ...
 Person 5: ate 0 pancakes */
+
