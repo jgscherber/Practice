@@ -85,6 +85,15 @@ def largest_vertical(matrix):
             if product > largest:
                 largest = product
     return largest
+# flip matrix l-r to reuse diagonal code
+def flip_ltor(matrix):
+    m_flip = []
+    for row in matrix:
+        m_flip_r = []
+        for i in range(19,-1,-1):
+            m_flip_r.append(row[i])
+        m_flip.append(m_flip_r)
+    return m_flip
 
 # top-left to bottom-right
 def largest_diagonal(matrix):
@@ -120,8 +129,12 @@ def largest_diagonal(matrix):
         
 
 matrix = make_numbers_list()
+m_flip = flip_ltor(matrix)
 h_large = largest_horizontal(matrix)
 v_large = largest_vertical(matrix)
-d_large = largest_diagonal(matrix)
-print(max((h_large,v_large,d_large)))
+d_large1 = largest_diagonal(matrix)
+d_large2 = largest_diagonal(m_flip)
+
+print(max((h_large,v_large,d_large1,d_large2)))
+# answer in bot-left to top-right diagonal: 70600674
 
