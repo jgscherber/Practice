@@ -5,13 +5,11 @@ the right and down, there are exactly 6 routes to the bottom right corner.
 
 How many such routes are there through a 20x20 grid?
 """
+import cProfile
 
 # only can move right or down
 
-# how to represent edge graph
-# 1. dict of nodes with key being current and value being list of connections
-
-#Example code for finding all paths:
+# Code for finding all paths:
 
 def find_all_paths(graph, start, end, path=[]):
     # adds the starting location to the list
@@ -62,22 +60,27 @@ graph_2x2 = {
 # etc.
 
 # each element goes to the next column and next row as long as either are <=20
-graph_20x20 = {"33":[]}
-m = 1
-n = 1
+grid = 13
+s_grid = str(grid)
+graph_20x20 = {s_grid+s_grid:[]}
 
-for m in range(1,21):
-    graph_20x20[str(m)+'1'] = [str(m)+'2',str(m+1) + '1']
-    graph_20x20[str(m)+'21'] = [str(m+1) + '21']
-    graph_20x20['211'] = ['212']
-    for n in range(2,21):
-        graph_20x20[str(m)+str(n)] = [str(m)+str(n+1),str(m+1) + str(n)]
-        graph_20x20['1'+str(n)] = ['1'+str(n+1),'2' + str(n)]
-        graph_20x20['21'+str(n)] = ['21'+str(n+1)]
+
+# build relationship dictionary
+for m in range(1,grid):
+    s_m = str(m)
+    graph_20x20[s_m+'1'] = [s_m+'2',str(m+1) + '1']
+    graph_20x20[s_m+s_grid] = [str(m+1) + s_grid]
+    graph_20x20[s_grid+'1'] = [s_grid+'2']
+    for n in range(2,grid):
+        s_n = str(n)
+        graph_20x20[s_m+s_n] = [s_m+str(n+1),str(m+1) + s_n]
+        graph_20x20['1'+s_n] = ['1'+str(n+1),'2' + s_n]
+        graph_20x20[s_grid+s_n] = [s_grid+str(n+1)]
         
         
 
     
-    
+# Recursion goes too deep, runs out of memory
+# at 12x12 grid, calling  7 million times...
 #print(graph_20x20)
-print(len(find_all_paths(graph_20x20,"11","2121")))
+print(cProfile.run('find_all_paths(graph_20x20,"11","55")'))
