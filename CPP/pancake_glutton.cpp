@@ -12,3 +12,25 @@ Person 3: ate 7 pancakes
 Person 8: ate 4 pancakes
 ...
 Person 5: ate 0 pancakes */
+
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main(){
+    int pancakes[10];
+    for(int i=0;i<10;i++)
+    {
+        cout<<"Person "<<i+1<<"! How many pancakes? "<<endl;
+        cin>>pancakes[i];
+    }
+    cout<<*max_element(pancakes,pancakes+9);
+    cout<<*min_element(pancakes,pancakes+9);
+    
+    
+    
+    
+    
+    
+    return 0;
+}
