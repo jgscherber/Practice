@@ -13,6 +13,7 @@ Person 8: ate 4 pancakes
 ...
 Person 5: ate 0 pancakes */
 
+
 #include <iostream>
 #include <algorithm>
 using namespace std;
@@ -34,3 +35,4 @@ int main(){
     
     return 0;
 }
+
