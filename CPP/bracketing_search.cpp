@@ -4,7 +4,7 @@ variables, data types, and numerical operators
 basic input/output
 logic (if statements, switch statements)
 loops (for, while, do-while)
-psudo random numbers
+pseudo random numbers
 
 Write a program that calculates a random number 1 through 100. The program then asks the user to guess the 
 number.
