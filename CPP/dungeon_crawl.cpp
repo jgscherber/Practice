@@ -39,3 +39,19 @@ HINT: Don't let the player move off the gameboard! You program will crash if the
 bottom of the board!(the same holds true for enemies)
 */
 
+int main(){
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    return 0;
+}
+
