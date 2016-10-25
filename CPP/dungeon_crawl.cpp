@@ -50,7 +50,7 @@ int main()
 {
     string row = ("G..........................T..............T..........T...............X");
     int player_loc = 0;
-    int bad[3] = (28,43,55)
+    
     for(int i=0;i<70;i++)
         {
             if((i%10==0) && (i!=0))
@@ -77,6 +77,16 @@ int main()
         else if (move=="down")
             player_loc+=10;
         row[player_loc] = 'G';
+        if((player_loc==27) || (player_loc==42) || (player_loc==53))
+        {
+            cout<<"You hit a trap!"<<endl;
+            return 0;
+        }
+        else if(player_loc==69)
+        {
+            cout<<"You got the treasure!"<<endl;
+            return 0;
+        }
         for(int i=0;i<70;i++)
         {
             if((i%10==0) && (i!=0))
