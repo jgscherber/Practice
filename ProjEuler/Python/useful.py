@@ -26,8 +26,9 @@ def isPrime(n):
     else:
         # only prime factor great than sqrt(n) is itself
         r = math.floor(n**(0.5))
-        # start at 5: 5=6k-1, k=1
-        f = 5
+        # start at 5: 5=6k-1, k=2
+        # k=1 caught by the n<9 clause
+        f = 11
         while f<=r:
             if n%f==0:
                 return False

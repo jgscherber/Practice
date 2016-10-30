@@ -23,7 +23,7 @@ bool isprime(int n)
         return false;
     else{
         int r = floor(sqrt(n));
-        int f = 5;
+        int f = 11;
         while(f<=r)
         {
             if(n%f==0)
@@ -34,4 +34,16 @@ bool isprime(int n)
         }
     return true;        
     }    
+}
+
+// GCD calculator
+unsigned GCD(unsigned u, unsigned v) 
+{
+    while ( v != 0) 
+    {
+        unsigned r = u % v;
+        u = v;
+        v = r;
+    }
+    return u;
 }

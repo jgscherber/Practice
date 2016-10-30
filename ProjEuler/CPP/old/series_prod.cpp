@@ -32,11 +32,12 @@ int main()
     {
         if((i+12)<=1000)
         {
-            // is probably returning the ordinal value when doing int(char)
-            p = (int(n[i]))*(int(n[i+1]))*(int(n[i+2]))*(int(n[i+3]))
-            * (int(n[i+4]))*(int(n[i+5]))*(int(n[i+6]))*(int(n[i+7]))
-            * (int(n[i+8]))*(int(n[i+9]))*(int(n[i+10]))*(int(n[i+11]))
-            * (int(n[i+12]));
+            // returning the ordinal value when doing int(char), need to shift oridinals
+            // by the start of numbers ( -'0')
+            p = (int(n[i]-'0'))*(int(n[i+1]-'0'))*(int(n[i+2]-'0'))*(int(n[i+3]-'0'))
+            * (int(n[i+4]-'0'))*(int(n[i+5]-'0'))*(int(n[i+6]-'0'))*(int(n[i+7]-'0'))
+            * (int(n[i+8]-'0'))*(int(n[i+9]-'0'))*(int(n[i+10]-'0'))*(int(n[i+11]-'0'))
+            * (int(n[i+12]-'0'));
             if(p>max_p)
                 max_p=p;
         }
