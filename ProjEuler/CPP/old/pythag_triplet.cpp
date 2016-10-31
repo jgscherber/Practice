@@ -1,11 +1,13 @@
 // Combining the 2 equations: a^2 + b^2 = (s-a-b)^2
 // If a<b<c, a <= (s-3)/3  and  b<(s-a)/2
 
+// Takes forever to run,m maybe GCD function?
+
 #include <iostream>
 #include <cmath>
 using namespace std;
 
-unsigned GCD(unsigned u, unsigned v);
+int GCD(int u, int v);
 
 int main()
 {
@@ -13,34 +15,47 @@ int main()
     int s2 = s/2;
     int mlimit = ceil(sqrt(s2))-1;
     
-    for(int m=2;m<mlimit)
+    for(int m=2;m<=mlimit;m++)
+    {
         if (s2%m==0)
         {
+            int k;
             int sm = s2/m;
             while(sm%2==0)
                 sm = sm/2;
             if(m%2==1)
-                int k = m+2;
+                k = m+2;
             else
                 k=m+1;
             while ((k<2*m) and (k<=sm))
-                // HERE
-                if((sm%k==0)and(GCD()
+            {
+                if((sm%k==0)and(GCD(k,m)==1))
+                {
+                    int d = s2/(k*m);
+                    int n = k-m;
+                    int a = d*(m*n-n*n);
+                    int b = 2*d*m*n;
+                    int c = d*(m*m+n*n);
+                    cout<<"a: "<<a<<" b: "<<b<<" c: "<<c<<endl;
+                }
+            }    
+        }    
+    }
+        
             
             
-            
-        }
+    
     
     
     
     return 0;
 }
 
-unsigned GCD(unsigned u, unsigned v) 
+int GCD(int u, int v) 
 {
     while ( v != 0) 
     {
-        unsigned r = u % v;
+        int r = u % v;
         u = v;
         v = r;
     }
