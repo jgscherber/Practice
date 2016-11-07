@@ -10,7 +10,7 @@ What is the millionth lexicographic permutation of the digits 0, 1, 2, 3, 4, 5,
 6, 7, 8 and 9?
 """
 import math
-digits = ['0','1','2','3','4','5','6','7','8','9']
+
 # 362880 (9!) start with each number
 # one millionth start with 2 (permutations 1088640 - 725760)
 
@@ -30,19 +30,24 @@ digits = ['0','1','2','3','4','5','6','7','8','9']
 # 2 (2!) ->  2
 
 # n!/k!(n-l)!
-string = ''
-posit = 0
-for i in range(9,0,-1):
-    poss = math.factorial(i)
-    c_poss = 0
-    #print("Before: ",posit)
-    while posit+poss < 1000000:
-        posit = posit + poss
-        c_poss += poss
-    #print("After: " ,posit)
-    print("Index: ", posit//c_poss-1)
-    string = string + str(digits.pop((posit//c_poss-1)))
 
+def find_lexicograph_position(n):
+    string = ''
+    posit = 0
+    digits = ['0','1','2','3','4','5','6','7','8','9']
+    # loop through 9! to 1!
+    for i in range(9,0,-1):
+        fact = math.factorial(i)
+        # keep track of how many digits we moved down
+        c_poss = 0
+        # keep the position under 1 million
+        while posit+fact <= (n-1):
+            posit = posit + fact
+            c_poss += 1
+        # combine them each time into one string
+        string = string + str(digits.pop(c_poss))
 
-print(string)
+    # add the last digit onto the other ones
+    return string + digits[0]
                                     
+print(find_lexicograph_position(1000000))
