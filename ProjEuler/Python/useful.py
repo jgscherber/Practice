@@ -17,7 +17,7 @@ def isPrime(n):
     # no even primes >2
     elif n%2==0:
         return False
-    # previes test excluded 4, 6, and 8
+    # previous test excluded 4, 6, and 8
     elif n<9:
         return True
     # not multiples of 3
@@ -26,10 +26,11 @@ def isPrime(n):
     else:
         # only prime factor great than sqrt(n) is itself
         r = math.floor(n**(0.5))
-        # start at 5: 5=6k-1, k=2
-        # k=1 caught by the n<9 clause
-        f = 11
+        # start at 5: 5=6k-1, k=1
+        # must start at 5 to exclude 5 multiples
+        f = 5
         while f<=r:
+            # 6k-1
             if n%f==0:
                 return False
             # 6k+1
@@ -37,3 +38,6 @@ def isPrime(n):
                 return False
             f+=6
     return True
+
+def primeList(size):
+    return [x for x in range(1,size+1) if isPrime(x)]
