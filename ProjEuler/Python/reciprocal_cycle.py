@@ -45,12 +45,3 @@ for d in reversed(primes[10:-1]):
 
 print(d)
 
-
-        
-    
-
-
-
-
-
-
