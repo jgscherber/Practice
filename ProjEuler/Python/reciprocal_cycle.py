@@ -18,4 +18,22 @@ seen that 1/7 has a 6-digit recurring cycle.
 Find the value of d < 1000 for which 1/d contains the longest recurring cycle
 in its decimal fraction part.
 """
+from decimal import Decimal, localcontext
+with localcontext() as ctx:
+    ctx.prec = 100
+    decimals = []
+    for x in range(1,1000):
+        x = Decimal(x)
+        decimals.append(str(1/x).lstrip('0').replace('.',''))
+        
+# c = current string, starting at first
+# full is full digit
+# len(c)/len(full[:len(c)*full.count(c)] == len(c) ???
 
+
+
+
+    
+    
+        
+            
