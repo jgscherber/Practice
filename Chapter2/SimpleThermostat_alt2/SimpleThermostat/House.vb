@@ -25,4 +25,8 @@
     Private Sub HeatButton_CheckedChanged(sender As Object, e As EventArgs) Handles HeatButton.CheckedChanged
         AI.RunAI(Me)
     End Sub
+
+    Private Sub OffButton_CheckedChanged(sender As Object, e As EventArgs) Handles OffButton.CheckedChanged
+        AI.RunAI(Me)
+    End Sub
 End Class

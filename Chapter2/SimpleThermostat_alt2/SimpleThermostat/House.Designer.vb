@@ -33,6 +33,7 @@ Partial Class House
         Me.Label5 = New System.Windows.Forms.Label()
         Me.AirButton = New System.Windows.Forms.RadioButton()
         Me.HeatButton = New System.Windows.Forms.RadioButton()
+        Me.OffButton = New System.Windows.Forms.RadioButton()
         CType(Me.AmbientUpDown, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TimeUpDown, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -141,11 +142,23 @@ Partial Class House
         Me.HeatButton.Text = "Heat"
         Me.HeatButton.UseVisualStyleBackColor = True
         '
+        'OffButton
+        '
+        Me.OffButton.AutoSize = True
+        Me.OffButton.Location = New System.Drawing.Point(12, 180)
+        Me.OffButton.Name = "OffButton"
+        Me.OffButton.Size = New System.Drawing.Size(39, 17)
+        Me.OffButton.TabIndex = 12
+        Me.OffButton.TabStop = True
+        Me.OffButton.Text = "Off"
+        Me.OffButton.UseVisualStyleBackColor = True
+        '
         'House
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(284, 240)
+        Me.Controls.Add(Me.OffButton)
         Me.Controls.Add(Me.HeatButton)
         Me.Controls.Add(Me.AirButton)
         Me.Controls.Add(Me.Label5)
@@ -177,4 +190,5 @@ Partial Class House
     Friend WithEvents Label5 As Label
     Friend WithEvents AirButton As RadioButton
     Friend WithEvents HeatButton As RadioButton
+    Friend WithEvents OffButton As RadioButton
 End Class

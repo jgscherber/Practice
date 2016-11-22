@@ -8,13 +8,13 @@
     Private Enum CurrentMode
         Heat
         Cool
-        'Off
+        Off
         Unknown
     End Enum
 
-    Private Function Furnace(World As House)
-        Dim ModeRadios() As RadioButton = {World.AirButton, World.HeatButton}
-        Dim ModeValues() As CurrentMode = {CurrentMode.Cool, CurrentMode.Heat}
+    Private Function FurnaceMode(World As House) As CurrentMode
+        Dim ModeRadios() As RadioButton = {World.AirButton, World.HeatButton, World.OffButton}
+        Dim ModeValues() As CurrentMode = {CurrentMode.Cool, CurrentMode.Heat, CurrentMode.Off}
 
         Dim i As Integer
 
@@ -49,8 +49,25 @@
 
     Private Function CoreAI(currentTemp As Integer,
                             desiredTemp As Integer, mode As CurrentMode) As String
-
-
+        Select Case mode
+            Case CurrentMode.Heat
+                If currentTemp < desiredTemp Then
+                    Return ("Heat")
+                Else
+                    Return ("Ready")
+                End If
+            Case CurrentMode.Cool
+                If currentTemp > desiredTemp Then
+                    Return ("Air")
+                Else
+                    Return ("Ready")
+                End If
+            Case CurrentMode.Off
+                Return ("Off")
+            Case Else
+                Return ("Bad Mode")
+        End Select
+        Return "Broken"
     End Function
     'World is pass in by House.vb
     'Public function, interacts with environment (House.vb)
