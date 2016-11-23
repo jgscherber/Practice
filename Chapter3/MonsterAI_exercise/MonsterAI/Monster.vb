@@ -16,8 +16,13 @@
         'Else
         '    Return (False)
         'End If
-        Return (CurrentHealth.Value >= 0.3 * CurrentHealth.Maximum)
+        Return (CurrentHealth.Value >= 0.7 * CurrentHealth.Maximum)
 
+    End Function
+
+    Public Function MediumHealth() As Boolean
+        Return (CurrentHealth.Value < 0.7 * CurrentHealth.Maximum AndAlso
+            CurrentHealth.Value >= 0.3 * CurrentHealth.Maximum)
     End Function
 
     ' Write text to the text box
@@ -32,6 +37,7 @@
         Brains.LoadState(New HidingState)
         Brains.LoadState(New AttackState)
         Brains.LoadState(New FleeState)
+        Brains.LoadState(New BerserkState)
     End Sub
 
     Private Sub ThinkButton_Click(sender As Object, e As EventArgs) Handles ThinkButton.Click

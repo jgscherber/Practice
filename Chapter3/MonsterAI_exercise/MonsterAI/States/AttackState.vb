@@ -19,9 +19,15 @@ Public Class AttackState
         MyTransitions.Add(Txn)
 
         ' Transition to flee
-        Txn = New LowHealthTxn
+        Txn = New MediumHealthTxn
         Txn.Initialize(GetType(FleeState).Name)
         MyTransitions.Add(Txn)
+
+        ' Transition to berserk
+        Txn = New LowHealthTxn
+        Txn.Initialize(GetType(BerserkState).Name)
+        MyTransitions.Add(Txn)
+
 
 
     End Sub
@@ -31,7 +37,7 @@ Public Class AttackState
     End Sub
 
     Public Overrides Sub ExitFunction(World As Monster)
-        World.Say("I better put my weapon and shield away.")
+        World.Say("This isn't going well...")
     End Sub
 
     Public Overrides Sub Update(World As Monster)
@@ -53,11 +59,23 @@ Public Class NoPlayersTxn
     End Function
 End Class
 
+Public Class MediumHealthTxn
+    Inherits BasicTransition
+
+    Public Overrides Function ShouldTransition(World As Monster) As String
+        If World.MediumHealth Then
+            Return NextState
+        Else
+            Return ""
+        End If
+    End Function
+End Class
+
 Public Class LowHealthTxn
     Inherits BasicTransition
 
     Public Overrides Function ShouldTransition(World As Monster) As String
-        If Not World.GoodHealth Then
+        If Not World.GoodHealth And Not World.MediumHealth Then
             Return NextState
         Else
             Return ""

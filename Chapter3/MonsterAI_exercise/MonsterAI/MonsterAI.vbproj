@@ -72,6 +72,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="States\BerserkState.vb" />
     <Compile Include="States\FleeState.vb" />
     <Compile Include="States\AttackState.vb" />
     <Compile Include="States\BasicState.vb" />
