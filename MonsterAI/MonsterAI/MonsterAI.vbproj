@@ -75,7 +75,7 @@
     <Compile Include="States\FleeState.vb" />
     <Compile Include="States\AttackState.vb" />
     <Compile Include="States\BasicState.vb" />
-    <Compile Include="BasicTransition.vb" />
+    <Compile Include="States\BasicTransition.vb" />
     <Compile Include="FSM.vb" />
     <Compile Include="States\HidingState.vb" />
     <Compile Include="Monster.vb">
