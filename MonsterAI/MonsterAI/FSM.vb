@@ -23,15 +23,36 @@
             Dim stateObj As BasicState
             stateObj = States(currentStateName)
             Dim nextStateName As String
+            ' TransitionCheck is a method of the state class
             nextStateName = stateObj.TransitionCheck(World)
+            ' Check if there is a transition
+            If nextStateName <> "" Then
+                If States.Contains(nextStateName) Then
+                    ' Leave current state
+                    stateObj.ExitFunction(World)
+                    ' get the next state from our States collections
+                    stateObj = States(nextStateName)
+                    currentStateName = nextStateName
+                    ' Enter and run the new state
+                    stateObj.Entry(World)
+                    stateObj.Update(World)
 
+                Else
+                    ' Catch if we forgot to add a state to the machine
+                    ' or forgot to remove one from the transitions
+                    World.Say("Error: State" & stateObj.GetType.Name &
+                              " wants to transition to " & nextStateName &
+                              " but that state is not in the machine!")
+                End If
+            Else
+                ' If we don't need to transition, only update
+                stateObj.Update(World)
 
-
-
-
-
-
-
+            End If
+        Else
+            ' In case we somehow start in a state not in the machine
+            World.Say("Error: Current state " & currentStateName _
+                      & " is not found in the machine")
         End If
     End Sub
 
