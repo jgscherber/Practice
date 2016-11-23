@@ -12,7 +12,11 @@ Public Class HidingState
         ' Creates the exit transition when the state is entered into for the
         ' first time
         Txn = New SeePlayerHighHealthTxn
-
+        ' Initialize declared in the BasicTransition
+        Txn.Initialize(GetType(AttackState).Name)
+        ' My Tranistion initialized in BasicState
+        ' only has one outgoing transition, so only one needs to be added
+        MyTransitions.Add(Txn)
     End Sub
 
     Public Overrides Sub Entry(World As Monster)
