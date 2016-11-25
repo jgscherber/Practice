@@ -11,10 +11,10 @@
         Dim Sq As Square
 
         Me.Cursor = Cursors.WaitCursor
-        ' if the field isn't already empty, then clear it out
-        If Field IsNot Nothing Then
+
+        If Field IsNot Nothing Then  ' if the field isn't already empty
             For Each Sq In Field
-                If Sq IsNot Nothing Then
+                If Sq IsNot Nothing Then ' then clear it out
                     Sq.Parent = Nothing
                 End If
             Next
@@ -24,9 +24,26 @@
         NumRows = nRows
         NumCols = nCols
 
-        ' Error check before assigning nMines to global NumMines
         Dim SqCnt As Integer
-        If nMines Then
+        If nMines > SqCnt Then ' Error check before assigning nMines to global NumMines
+            nMines = SqCnt - 1 ' make sure there's at least 1 empty square in the game board
+        End If
+        NumMines = nMines
+
+        ReDim Field(NumRows - 1, NumCols - 1) ' -1 for zero-based arrays
+        Dim row, col As Integer
+        ' Create all the squares
+        For col = 0 To NumCols - 1
+            For row = 0 To NumRows - 1
+                Sq = New Square(row, col) ' give each square object info about where it is
+                ' set it's location in the form
+                Sq.Top = row * Sq.Height
+                Sq.Left = col * Sq.Width
+                Sq.Parent = Me ' the parent object of the square is the PlayingField object
+                Field(row, col) = Sq ' store it in array for easy referencing
+            Next
+        Next
+        Me.Cursor = Cursors.Default
     End Sub
 
     Private Sub ExpertButton_Click(sender As Object, e As EventArgs) Handles ExpertButton.Click

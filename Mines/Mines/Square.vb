@@ -1,6 +1,6 @@
 ﻿Public Class Square
     Inherits System.Windows.Forms.Button
-    Dim Row, Col As Integer
+    Dim Row, Col As Integer 'global variables in the class
     ' initialization method
     Public Sub New(R As Integer, C As Integer)
         ' MyBase is the super class, create a new super class object
