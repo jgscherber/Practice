@@ -24,5 +24,18 @@
     Public Sub Say(someThought As String)
         ThoughtsText.AppendText(someThought & vbCrLf)
     End Sub
+
+    Dim Brains As New FSM
+    Private Sub Monster_Load(sender As Object, e As EventArgs) Handles Me.Load
+        ' adds the states to the machine
+        ' Adds a state-stateName value pair to States collection in FSM
+        Brains.LoadState(New HidingState)
+        Brains.LoadState(New AttackState)
+        Brains.LoadState(New FleeState)
+    End Sub
+
+    Private Sub ThinkButton_Click(sender As Object, e As EventArgs) Handles ThinkButton.Click
+        Brains.RunAI(Me)
+    End Sub
 #End Region
 End Class
