@@ -1,5 +1,12 @@
 ﻿Public Class Square
     Inherits System.Windows.Forms.Button
+
+    Public Enum HiddenValue
+        Uninitialized
+        Safe
+        Mine
+    End Enum
+
     Dim Row, Col As Integer 'global variables in the class
     ' initialization method
     Public Sub New(R As Integer, C As Integer)
