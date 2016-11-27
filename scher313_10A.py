@@ -1,3 +1,8 @@
+# Jacob Scherber
+# Sec. 24
+
+# super class with only color attribute
+
 class FootMeasure(object):
     def __init__(self, feet=0, inches=0):
         # use int conversion instead of integer div to force rounding toward zero
@@ -9,7 +14,6 @@ class FootMeasure(object):
             self.inches = -self.inches
         else:
             self.inches = inches%12
-        
     def __repr__(self):
         if self.inches == 0 and self.feet != 0:
             return str(self.feet) + " ft."
@@ -67,4 +71,3 @@ def testMeasure():
     print(meas2 == meas3)
     
 testMeasure()
-
