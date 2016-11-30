@@ -54,6 +54,32 @@
         ' Called by the first button click, generates the mines and accumulates the neighbors for
         ' each mined square
 
+        ' track # of mines remaining
+        Dim minesLeft As Integer = NumMines ' global variable within class
+
+        ' numner of places left to place mines (minus the one we've already clicked) - why?
+        Dim squaresLeft As Integer = (NumRows * NumCols) - 1
+
+        ' single precision floating points
+        Dim perCent, roll As Single
+
+        Call Randomize() 'reseed the random number generator
+
+        Dim Row, Col As Integer
+        Dim Neighbors As Collection
+
+        For Row = 0 To NumRows - 1
+            For Col = 0 To NumCols - 1
+                If Row <> ClickedRow Or Col <> ClickedCol Then ' -(Row = ClickedRow and Col = ClickedCol) - not the square it was called from
+                    perCent = CSng(minesLeft / squaresLeft)
+                    roll = Rnd() ' returns single
+
+
+
+                End If
+            Next
+        Next
+
 
     End Sub
 
