@@ -50,4 +50,11 @@
         NewGame(16, 30, 99)
     End Sub
 
+    Public Sub InitializeSquares(ClickedRow As Integer, ClickedCol As Integer)
+        ' Called by the first button click, generates the mines and accumulates the neighbors for
+        ' each mined square
+
+
+    End Sub
+
 End Class
