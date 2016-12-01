@@ -5,7 +5,7 @@
     ' dim a multidimensional array with no dimensions (m,n)
     Public Field(,) As Square
     Dim NumRows, NumCols, NumMines As Integer
-
+#Region "New Game"
     Private Sub NewGame(nRows As Integer, nCols As Integer, nMines As Integer)
 
         Dim Sq As Square
@@ -44,12 +44,17 @@
                 Field(row, col) = Sq ' store it in array for easy referencing
             Next
         Next
+
+        ' Initialize the counters
+        MinesLeftLabel.Text = NumMines.ToString
+        MovesLeftLabel.Text = SqCnt.ToString
+
         Me.Cursor = Cursors.Default
 
     End Sub
 
     Private Sub ExpertButton_Click(sender As Object, e As EventArgs) Handles ExpertButton.Click
-        NewGame(10, 10, 98)
+        NewGame(10, 10, 16)
     End Sub
 
     Public Sub InitializeSquares(ClickedRow As Integer, ClickedCol As Integer)
@@ -75,10 +80,10 @@
                 If Row <> ClickedRow Or Col <> ClickedCol Then ' -(Row = ClickedRow and Col = ClickedCol) - not the square it was called from
                     perCent = CSng(minesLeft / squaresLeft)
                     roll = Rnd() ' returns single between 0 and 1
-                    'MsgBox(minesLeft.ToString & " _ " & squaresLeft.ToString & " / " & roll.ToString & " _ " & perCent.ToString)
+
                     If (roll < perCent) Or (minesLeft >= squaresLeft) Then ' if more squares than mines, ok to skip some
                         ' Its a mine!
-                        Neighbors = nearNeighbors(Row, Col) ' not declared yet
+                        Neighbors = NearNeighbors(Row, Col)
                         Field(Row, Col).Init(Square.HiddenValue.Mine, Neighbors) ' field is 2-dim array holding all the squares
                         minesLeft -= 1
                     Else
@@ -88,10 +93,17 @@
                         Field(Row, Col).Init(Square.HiddenValue.Safe, Neighbors)
                     End If
                     squaresLeft -= 1 ' either placed a mine or we didn't
+                Else
 
+                    Neighbors = New Collection
+                    Field(Row, Col).Init(Square.HiddenValue.Safe, Neighbors)
                 End If
+
+
+
             Next Col
         Next Row
+
         ' all mines should be placed by now
 
         If minesLeft > 0 Then
@@ -99,6 +111,8 @@
         End If
 
     End Sub
+#End Region
+
 #Region "Neighbor code"
     Public Function KeyFromRC(row As Integer, col As Integer)
         Return "R" & row.ToString & "C" & col.ToString
@@ -132,6 +146,37 @@
         End If
         Return Neighbors
     End Function
+
+
+
+#End Region
+
+#Region "Game code"
+    ' change the number of moves remaining
+    Public Sub DecrementMovesLeft()
+        MovesLeftLabel.Text = (CInt(MovesLeftLabel.Text) - 1).ToString
+    End Sub
+
+    Public Sub IncrementMovesLeft()
+        MovesLeftLabel.Text = (CInt(MovesLeftLabel.Text) - 1).ToString
+    End Sub
+
+    ' change the number of mines remaining
+    Public Sub DecrementMinesLeft() ' by placing a flag
+        MinesLeftLabel.Text = (CInt(MinesLeftLabel.Text) - 1).ToString
+    End Sub
+
+    Public Sub IncrementMinesLeft() ' by removing a flag
+        MinesLeftLabel.Text = (CInt(MinesLeftLabel.Text) - 1).ToString
+    End Sub
+
+    ' something bad happened and a square is calling for the game to end
+    Public Sub EndGame()
+        Dim Sq As Square
+        For Each Sq In Field
+            Sq.EndGame() ' will also be a method of the square class
+        Next
+    End Sub
 
 
 
