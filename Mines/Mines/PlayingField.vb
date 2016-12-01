@@ -25,7 +25,8 @@
         NumCols = nCols
 
         Dim SqCnt As Integer
-        If nMines > SqCnt Then ' Error check before assigning nMines to global NumMines
+        SqCnt = (nRows * nCols)
+        If nMines >= SqCnt Then ' Error check before assigning nMines to global NumMines
             nMines = SqCnt - 1 ' make sure there's at least 1 empty square in the game board
         End If
         NumMines = nMines
@@ -44,10 +45,11 @@
             Next
         Next
         Me.Cursor = Cursors.Default
+
     End Sub
 
     Private Sub ExpertButton_Click(sender As Object, e As EventArgs) Handles ExpertButton.Click
-        NewGame(16, 30, 99)
+        NewGame(10, 10, 98)
     End Sub
 
     Public Sub InitializeSquares(ClickedRow As Integer, ClickedCol As Integer)
@@ -72,15 +74,67 @@
             For Col = 0 To NumCols - 1
                 If Row <> ClickedRow Or Col <> ClickedCol Then ' -(Row = ClickedRow and Col = ClickedCol) - not the square it was called from
                     perCent = CSng(minesLeft / squaresLeft)
-                    roll = Rnd() ' returns single
-
-
+                    roll = Rnd() ' returns single between 0 and 1
+                    'MsgBox(minesLeft.ToString & " _ " & squaresLeft.ToString & " / " & roll.ToString & " _ " & perCent.ToString)
+                    If (roll < perCent) Or (minesLeft >= squaresLeft) Then ' if more squares than mines, ok to skip some
+                        ' Its a mine!
+                        Neighbors = nearNeighbors(Row, Col) ' not declared yet
+                        Field(Row, Col).Init(Square.HiddenValue.Mine, Neighbors) ' field is 2-dim array holding all the squares
+                        minesLeft -= 1
+                    Else
+                        ' only need to update the neighbors if it's mine
+                        ' otherwise Neighbors is empty
+                        Neighbors = New Collection
+                        Field(Row, Col).Init(Square.HiddenValue.Safe, Neighbors)
+                    End If
+                    squaresLeft -= 1 ' either placed a mine or we didn't
 
                 End If
-            Next
-        Next
+            Next Col
+        Next Row
+        ' all mines should be placed by now
 
+        If minesLeft > 0 Then
+            MsgBox(minesLeft.ToString & " Mines Leftover", MsgBoxStyle.OkOnly)
+        End If
 
     End Sub
+#Region "Neighbor code"
+    Public Function KeyFromRC(row As Integer, col As Integer)
+        Return "R" & row.ToString & "C" & col.ToString
+    End Function
+
+    ' point array, can then reference the X and Y attributes of each point
+    Private NearNeighborsOffSet() As Point = {
+        New Point(-1, -1), New Point(-1, 0), New Point(-1, 1), New Point(0, -1),
+        New Point(0, 1), New Point(1, -1), New Point(1, 0), New Point(1, 1)} ' all 8 points around our square
+    Public Function NearNeighbors(Row As Integer, Col As Integer) As Collection
+        Return GeneralNeighbors(Row, Col, NearNeighborsOffSet)
+    End Function
+
+    Private Function GeneralNeighbors(Row As Integer, Col As Integer, Offsets() As Point) As Collection
+        Dim Neighbors As New Collection
+
+        If Field IsNot Nothing Then
+            Dim Pt As Point
+            Dim NeighborRow, NeighborCol As Integer
+
+            For Each Pt In Offsets
+                NeighborCol = Col + Pt.X
+                NeighborRow = Row + Pt.Y
+                If NeighborRow > 0 And
+                        (NeighborRow < NumRows) And
+                        (NeighborCol >= 0) And
+                        (NeighborCol < NumCols) Then
+                    Neighbors.Add(Field(NeighborRow, NeighborCol), KeyFromRC(NeighborRow, NeighborCol))
+                End If
+            Next
+        End If
+        Return Neighbors
+    End Function
+
+
+
+#End Region
 
 End Class

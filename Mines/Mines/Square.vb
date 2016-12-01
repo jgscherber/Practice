@@ -22,7 +22,7 @@
         ' MyBase is the super class, create a new super class object
         MyBase.New()
         ' Set properties from the superclass
-        Me.Font = New System.Drawing.Font("Arial", 0.9, FontStyle.Bold)
+        Me.Font = New System.Drawing.Font("Arial", 9, FontStyle.Bold) ' haha had font size set 0.9!
         Me.BackColor = Color.White
 
         ' Row and Col declared above, remaining must be declared in superclass?
@@ -46,12 +46,13 @@
             Next
         End If
 
-        ' debugging code {
+        ' debugging code
         If contents = HiddenValue.Mine Then
+
             Me.Text = ShowMine ' change button text to @
 
         End If
-        ' }
+
 
     End Sub
 
