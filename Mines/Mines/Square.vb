@@ -93,6 +93,8 @@
 
         ' If the button hasn't been clicked yet, check what should happen
         If Not Revealed Then
+            ' keep flagged squares from being clicked
+            If Me.Text = ShowFlag Then Exit Sub
 
             If contents = HiddenValue.Safe Then
                 Revealed = True
@@ -103,9 +105,14 @@
                 If actualNearMines > 0 Then
                     Me.Text = actualNearMines.ToString
                 Else
-                    ' Implement free moves??
+                    Dim Sq As Square
+                    For Each Sq In theField.NearNeighbors(Row, Col)
+                        Sq.Square_Click(Nothing, Nothing)
+                    Next
                 End If
-                theField.DecrementMovesLeft()
+                ' doesnt decrement moves if being called by the no-near-mines clause
+                If sender IsNot Nothing Then theField.DecrementMovesLeft()
+                ' theField.DecrementMovesLeft()
             Else
                 Me.Text = ShowMine
                 theField.EndGame()
@@ -126,6 +133,29 @@
                     Me.Text = ShowBrokenFlag
                 End If
             End If
+        End If
+    End Sub
+
+    Private Sub Square_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
+        If e.Button = System.Windows.Forms.MouseButtons.Right Then
+            Dim theField As PlayingField = Me.Parent
+
+            If theField Is Nothing Then Exit Sub
+            If Not Revealed Then
+                Select Case Me.Text
+                    Case ""
+                        Me.Text = ShowFlag
+                        theField.DecrementMinesLeft()
+                        theField.DecrementMovesLeft()
+                    Case ShowFlag
+                        Me.Text = ""
+                        theField.IncrementMinesLeft()
+                        theField.IncrementMovesLeft()
+                End Select
+            Else
+                ' Placeholder for AI
+            End If
+
         End If
     End Sub
 

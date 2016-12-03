@@ -54,7 +54,7 @@
     End Sub
 
     Private Sub ExpertButton_Click(sender As Object, e As EventArgs) Handles ExpertButton.Click
-        NewGame(10, 10, 16)
+        NewGame(10, 10, 8)
     End Sub
 
     Public Sub InitializeSquares(ClickedRow As Integer, ClickedCol As Integer)
@@ -136,7 +136,7 @@
             For Each Pt In Offsets
                 NeighborCol = Col + Pt.X
                 NeighborRow = Row + Pt.Y
-                If NeighborRow > 0 And
+                If NeighborRow >= 0 And
                         (NeighborRow < NumRows) And
                         (NeighborCol >= 0) And
                         (NeighborCol < NumCols) Then
@@ -158,7 +158,7 @@
     End Sub
 
     Public Sub IncrementMovesLeft()
-        MovesLeftLabel.Text = (CInt(MovesLeftLabel.Text) - 1).ToString
+        MovesLeftLabel.Text = (CInt(MovesLeftLabel.Text) + 1).ToString
     End Sub
 
     ' change the number of mines remaining
@@ -167,7 +167,7 @@
     End Sub
 
     Public Sub IncrementMinesLeft() ' by removing a flag
-        MinesLeftLabel.Text = (CInt(MinesLeftLabel.Text) - 1).ToString
+        MinesLeftLabel.Text = (CInt(MinesLeftLabel.Text) + 1).ToString
     End Sub
 
     ' something bad happened and a square is calling for the game to end
