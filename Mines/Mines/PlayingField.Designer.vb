@@ -23,17 +23,19 @@ Partial Class PlayingField
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.ExpertButton = New System.Windows.Forms.Button()
-        Me.MovesLeftLabel = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.MinesLeftLabel = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.MinesLeftLabel = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.MovesLeftLabel = New System.Windows.Forms.Label()
+        Me.ExpertButton = New System.Windows.Forms.Button()
+        Me.ThoughtsTextBox = New System.Windows.Forms.TextBox()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.White
+        Me.Panel1.Controls.Add(Me.ThoughtsTextBox)
         Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Controls.Add(Me.MinesLeftLabel)
         Me.Panel1.Controls.Add(Me.Label1)
@@ -44,36 +46,15 @@ Partial Class PlayingField
         Me.Panel1.Size = New System.Drawing.Size(906, 124)
         Me.Panel1.TabIndex = 0
         '
-        'ExpertButton
+        'Label2
         '
-        Me.ExpertButton.Location = New System.Drawing.Point(3, 3)
-        Me.ExpertButton.Name = "ExpertButton"
-        Me.ExpertButton.Size = New System.Drawing.Size(75, 23)
-        Me.ExpertButton.TabIndex = 1
-        Me.ExpertButton.Text = "Expert"
-        Me.ExpertButton.UseVisualStyleBackColor = True
-        '
-        'MovesLeftLabel
-        '
-        Me.MovesLeftLabel.AutoSize = True
-        Me.MovesLeftLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.MovesLeftLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.MovesLeftLabel.Location = New System.Drawing.Point(204, 3)
-        Me.MovesLeftLabel.Name = "MovesLeftLabel"
-        Me.MovesLeftLabel.Size = New System.Drawing.Size(31, 18)
-        Me.MovesLeftLabel.TabIndex = 2
-        Me.MovesLeftLabel.Text = "888"
-        Me.MovesLeftLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(81, 3)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(117, 16)
-        Me.Label1.TabIndex = 3
-        Me.Label1.Text = "Moves Remaining"
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(81, 29)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(112, 16)
+        Me.Label2.TabIndex = 5
+        Me.Label2.Text = "Mines Remaining"
         '
         'MinesLeftLabel
         '
@@ -87,15 +68,46 @@ Partial Class PlayingField
         Me.MinesLeftLabel.Text = "999"
         Me.MinesLeftLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'Label2
+        'Label1
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(81, 29)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(112, 16)
-        Me.Label2.TabIndex = 5
-        Me.Label2.Text = "Mines Remaining"
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(81, 3)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(117, 16)
+        Me.Label1.TabIndex = 3
+        Me.Label1.Text = "Moves Remaining"
+        '
+        'MovesLeftLabel
+        '
+        Me.MovesLeftLabel.AutoSize = True
+        Me.MovesLeftLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.MovesLeftLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.MovesLeftLabel.Location = New System.Drawing.Point(204, 3)
+        Me.MovesLeftLabel.Name = "MovesLeftLabel"
+        Me.MovesLeftLabel.Size = New System.Drawing.Size(31, 18)
+        Me.MovesLeftLabel.TabIndex = 2
+        Me.MovesLeftLabel.Text = "888"
+        Me.MovesLeftLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'ExpertButton
+        '
+        Me.ExpertButton.Location = New System.Drawing.Point(3, 3)
+        Me.ExpertButton.Name = "ExpertButton"
+        Me.ExpertButton.Size = New System.Drawing.Size(75, 23)
+        Me.ExpertButton.TabIndex = 1
+        Me.ExpertButton.Text = "Expert"
+        Me.ExpertButton.UseVisualStyleBackColor = True
+        '
+        'ThoughtsTextBox
+        '
+        Me.ThoughtsTextBox.Location = New System.Drawing.Point(487, 3)
+        Me.ThoughtsTextBox.Multiline = True
+        Me.ThoughtsTextBox.Name = "ThoughtsTextBox"
+        Me.ThoughtsTextBox.ReadOnly = True
+        Me.ThoughtsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.ThoughtsTextBox.Size = New System.Drawing.Size(416, 118)
+        Me.ThoughtsTextBox.TabIndex = 6
         '
         'PlayingField
         '
@@ -117,4 +129,5 @@ Partial Class PlayingField
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents MinesLeftLabel As Label
+    Friend WithEvents ThoughtsTextBox As TextBox
 End Class

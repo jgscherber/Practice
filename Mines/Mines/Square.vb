@@ -111,8 +111,9 @@
                     Next
                 End If
                 ' doesnt decrement moves if being called by the no-near-mines clause
-                If sender IsNot Nothing Then theField.DecrementMovesLeft()
-                ' theField.DecrementMovesLeft()
+                ' will probably mess with the AI portion
+                'If sender IsNot Nothing Then theField.DecrementMovesLeft()
+                theField.DecrementMovesLeft()
             Else
                 Me.Text = ShowMine
                 theField.EndGame()
@@ -159,5 +160,17 @@
         End If
     End Sub
 
+#End Region
+
+#Region "AI Code"
+    Public Sub LeftClick()
+        Call Square_Click(Nothing, Nothing)
+    End Sub
+
+    Public Sub RightClick()
+        ' created a virtual right-click to send to mouse up
+        Dim e As New System.Windows.Forms.MouseEventArgs(System.Windows.Forms.MouseButtons.Right, 0, 0, 0, 0)
+        Call Square_MouseUp(Nothing, e)
+    End Sub
 #End Region
 End Class

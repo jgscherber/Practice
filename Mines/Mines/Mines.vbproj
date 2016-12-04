@@ -72,6 +72,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicRule.vb" />
     <Compile Include="PlayingField.vb">
       <SubType>Form</SubType>
     </Compile>

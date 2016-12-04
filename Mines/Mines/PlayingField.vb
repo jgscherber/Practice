@@ -48,7 +48,7 @@
         ' Initialize the counters
         MinesLeftLabel.Text = NumMines.ToString
         MovesLeftLabel.Text = SqCnt.ToString
-
+        ThoughtsTextBox.Clear()
         Me.Cursor = Cursors.Default
 
     End Sub
@@ -166,6 +166,8 @@
         MinesLeftLabel.Text = (CInt(MinesLeftLabel.Text) - 1).ToString
     End Sub
 
+
+
     Public Sub IncrementMinesLeft() ' by removing a flag
         MinesLeftLabel.Text = (CInt(MinesLeftLabel.Text) + 1).ToString
     End Sub
@@ -182,4 +184,14 @@
 
 #End Region
 
+#Region "AI Related"
+    Public Sub FirstThoughts(someThought As String)
+        ThoughtsTextBox.Clear()
+        MoreThoughts(someThought)
+    End Sub
+
+    Public Sub MoreThoughts(someThought As String)
+        ThoughtsTextBox.AppendText(someThought)
+    End Sub
+#End Region
 End Class
