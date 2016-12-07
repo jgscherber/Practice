@@ -72,6 +72,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI.vb" />
     <Compile Include="BasicRule.vb" />
     <Compile Include="PlayingField.vb">
       <SubType>Form</SubType>
@@ -95,6 +96,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="RuleOne.vb" />
     <Compile Include="Square.vb">
       <SubType>Component</SubType>
     </Compile>

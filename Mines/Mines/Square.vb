@@ -154,7 +154,13 @@
                         theField.IncrementMovesLeft()
                 End Select
             Else
-                ' Placeholder for AI
+                theField.FirstThoughts("Thinking about Square at Row=" _
+                                       & Row.ToString & ", Col=" _
+                                       & Col.ToString)
+                Dim R1 As New RuleOne
+                If R1.Matches(Me) > 0 Then ' matches defined in subclass
+                    R1.Execute() ' execute define in superclass
+                End If
             End If
 
         End If
@@ -172,5 +178,18 @@
         Dim e As New System.Windows.Forms.MouseEventArgs(System.Windows.Forms.MouseButtons.Right, 0, 0, 0, 0)
         Call Square_MouseUp(Nothing, e)
     End Sub
+
+    ' row and column reporting, to know which squares to click
+    Public ReadOnly Property R() As Integer
+        Get
+            Return Row
+        End Get
+    End Property
+
+    Public ReadOnly Property C() As Integer
+        Get
+            Return Col
+        End Get
+    End Property
 #End Region
 End Class
