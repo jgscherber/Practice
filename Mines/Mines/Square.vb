@@ -137,6 +137,7 @@
         End If
     End Sub
 
+
     Private Sub Square_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
         If e.Button = System.Windows.Forms.MouseButtons.Right Then
             Dim theField As PlayingField = Me.Parent
@@ -154,13 +155,18 @@
                         theField.IncrementMovesLeft()
                 End Select
             Else
+                'theField.FirstThoughts("Thinking about Square at Row=" _
+                '                       & Row.ToString & ", Col=" _
+                '                       & Col.ToString)
+                'Dim R1 As New RuleOne
+                'If R1.Matches(Me) > 0 Then ' matches defined in subclass
+                '    R1.Execute() ' execute define in superclass
+                'End If
                 theField.FirstThoughts("Thinking about Square at Row=" _
                                        & Row.ToString & ", Col=" _
                                        & Col.ToString)
-                Dim R1 As New RuleOne
-                If R1.Matches(Me) > 0 Then ' matches defined in subclass
-                    R1.Execute() ' execute define in superclass
-                End If
+                theField.Brains.RunAI(Me)
+
             End If
 
         End If

@@ -5,6 +5,12 @@
     ' dim a multidimensional array with no dimensions (m,n)
     Public Field(,) As Square
     Dim NumRows, NumCols, NumMines As Integer
+    Public Brains As New FrameWork
+    Private Sub PlayingField_Load(sender As Object, e As EventArgs) Handles Me.Load
+        ' ordering of the rules within collections matters
+        ' want certain checks made before others
+        Brains.AddRule(New RuleOne)
+    End Sub
 #Region "New Game"
     Private Sub NewGame(nRows As Integer, nCols As Integer, nMines As Integer)
 
@@ -193,5 +199,7 @@
     Public Sub MoreThoughts(someThought As String)
         ThoughtsTextBox.AppendText(someThought)
     End Sub
+
+
 #End Region
 End Class

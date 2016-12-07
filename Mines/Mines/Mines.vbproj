@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="AI.vb" />
     <Compile Include="BasicRule.vb" />
+    <Compile Include="FrameWork.vb" />
     <Compile Include="PlayingField.vb">
       <SubType>Form</SubType>
     </Compile>
