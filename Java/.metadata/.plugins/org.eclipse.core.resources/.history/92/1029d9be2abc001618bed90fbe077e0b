@@ -1,0 +1,14 @@
+import java.util.Scanner;
+
+public class eggDozens {
+	public static void main(){
+		Scanner stdin = new Scanner(System.in);
+		System.out.print("How many eggs do you have? ");
+		int eggs = stdin.nextInt();
+		int dozens = eggs%12;
+		int leftover = eggs/12
+		
+		
+	
+	}
+}

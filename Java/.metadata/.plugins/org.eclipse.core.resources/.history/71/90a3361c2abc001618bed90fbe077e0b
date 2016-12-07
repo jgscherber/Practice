@@ -1,0 +1,7 @@
+import java.util.Scanner;
+
+public class eggDozens {
+	public static void main(){
+		Scanner stdin = new Scanner(System.in);
+	}
+}

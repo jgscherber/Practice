@@ -1,0 +1,22 @@
+import java.util.Scanner;
+
+public class changeCount {
+	public static void main(){
+		Scanner stdin = new Scanner(System.in);
+		int quarters;
+		int dimes;
+		int nickles;
+		int pennies;
+		
+		System.out.println("Enter the number of quarters: ");
+		quarters = stdin.nextInt();
+		System.out.println("Enter the number of dimes: ");
+		dimes = stdin.nextInt();
+		System.out.println("Enter the number of nickles: ");
+		nickles = stdin.nextInt();
+		System.out.println("Enter the number of pennies: ");
+		pennies = stdin.nextInt();
+		
+		
+	}
+}
