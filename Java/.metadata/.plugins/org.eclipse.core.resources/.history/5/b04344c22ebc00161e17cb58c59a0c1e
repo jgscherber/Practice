@@ -6,7 +6,7 @@ public class eggDozens {
 		System.out.print("How many eggs do you have? ");
 		int eggs = stdin.nextInt();
 		int gross = eggs/144;
-		int remain = eggs%144;
+		int remain = eggs%12;
 		int dozens = remain/12; // interger division doesn't have it's own operator
 		int leftover = remain%12; 
 		

@@ -1,0 +1,12 @@
+import java.util.Scanner;
+
+public class nameBreak {
+	public static void main(String[] args){
+		Scanner stdin = new Scanner(System.in);
+		System.out.print("Enter your full name: ");
+		String f_name = stdin.next();
+		
+		
+		
+	}
+}

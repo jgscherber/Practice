@@ -1,0 +1,14 @@
+import java.util.Scanner;
+
+public class nameBreak {
+	public static void main(String[] args){
+		Scanner stdin = new Scanner(System.in);
+		System.out.print("Enter your full name: ");
+		String full_name = stdin.next();
+		int spLoc = full_name.indexOf(" ");
+		String first_name = full_name.substring(0, spLoc);
+		String last_name = full_name.substring(spLoc,-1);
+		
+		
+	}
+}
