@@ -1,0 +1,10 @@
+
+public class DiceRoll {
+	public static void main(String[] args) { // takes in a String array named args
+		// void: doesn't return anything
+		// static: called without an object, method of the class, not of an
+		//		   instance of the object (have no declarer, just not listed as static)
+		
+	}
+
+}
