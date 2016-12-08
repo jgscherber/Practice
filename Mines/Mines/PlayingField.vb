@@ -10,6 +10,7 @@
         ' ordering of the rules within collections matters
         ' want certain checks made before others
         Brains.AddRule(New RuleOne)
+        Brains.AddRule(New RuleTwoNear)
     End Sub
 #Region "New Game"
     Private Sub NewGame(nRows As Integer, nCols As Integer, nMines As Integer)

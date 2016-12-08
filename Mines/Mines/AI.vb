@@ -63,9 +63,51 @@
             TheirBlankSquares = BasicStatsAndBlanks(Helper, TheirNeighbors, theySee, theirFlags, theirBlanks) ' get info for the current neighbor
             If theirBlanks = 0 Then Continue For ' if they lack blanks, can't help
 
+            Dim PrivateBlanks As New Collection
+            Dim commonBlankCount As Integer
+
+            Dim Sq As Square
+
+            For Each Sq In BlankSquares
+                Dim sqKey As String = theField.KeyFromRC(Sq.R, Sq.C)
+                If TheirBlankSquares.Contains(sqKey) Then
+                    commonBlankCount += 1
+                Else
+                    PrivateBlanks.Add(Sq, sqKey)
+                End If
+            Next
+            If commonBlankCount = 0 Then Continue For ' no shared blanks, move onto next neighbor, nothing can be learned
+            If PrivateBlanks.Count = 0 Then Continue For ' no blanks that are private, nothing can be done
+
+            ' If there are some common blanks and some private blanks, might be able to do something!
+
+            Dim theirPrivateBlankCount As Integer = theirBlanks - commonBlankCount
+            Dim minCommonMines As Integer = theySee - theirPrivateBlankCount - theirFlags ' how many mines might there be?
+            If minCommonMines < 0 Then Continue For ' can't be less than 0 ...
+
+            Dim minCommonClear As Integer = theirBlanks - (theySee - theirFlags) - theirPrivateBlankCount
+            If minCommonClear < 0 Then Continue For
+
+            If minCommonClear = 0 And minCommonMines = 0 Then Continue For ' both zero, no information
+
+            If minCommonMines > 0 Then
+                If minCommonMines = sees - flags Then ' all mines must be in the common mines, private blanks must be ok!
+                    SimonSays = BasicRule.PossibleActions.ClickBlanks
+                    SquaresList = PrivateBlanks ' passed byref
+                    Return ' found a move, can be done
+                End If
+            End If
+
+            If minCommonClear > 0 Then
+                If blanks - minCommonClear = sees - flags Then ' common blanks account for all clear, privats must be all mines
+                    SimonSays = BasicRule.PossibleActions.BlanksToFlags
+                    SquaresList = PrivateBlanks
+                    Return
+                End If
+            End If
+
         Next
-
-
+        
     End Sub
 
 
