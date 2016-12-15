@@ -1,0 +1,11 @@
+import java.util.Scanner;
+
+
+public class Exercise_33 {
+
+	public static void main(String[] args) {
+		// simple calculator, exit on 0; operators: + , - , / , *
+
+	}
+
+}
