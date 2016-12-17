@@ -98,6 +98,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="RuleOne.vb" />
+    <Compile Include="RuleTwoFar.vb" />
     <Compile Include="RuleTwoNear.vb" />
     <Compile Include="Square.vb">
       <SubType>Component</SubType>

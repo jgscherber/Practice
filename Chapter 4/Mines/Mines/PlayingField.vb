@@ -11,6 +11,7 @@
         ' want certain checks made before others
         Brains.AddRule(New RuleOne)
         Brains.AddRule(New RuleTwoNear)
+        Brains.AddRule(New RuleTwoFar)
     End Sub
 #Region "New Game"
     Private Sub NewGame(nRows As Integer, nCols As Integer, nMines As Integer)
@@ -129,6 +130,10 @@
     Private NearNeighborsOffSet() As Point = {
         New Point(-1, -1), New Point(-1, 0), New Point(-1, 1), New Point(0, -1),
         New Point(0, 1), New Point(1, -1), New Point(1, 0), New Point(1, 1)} ' all 8 points around our square
+    Private FarNeighborOffsets() As Point = {
+        New Point(-2, -2), New Point(-2, -1), New Point(-2, 0), New Point(-2, 1), New Point(-2, 2),
+        New Point(-1, -2), New Point(-1, 2), New Point(0, -2), New Point(0, 2), New Point(1, -2), New Point(1, 2),
+        New Point(2, -2), New Point(2, -1), New Point(2, 0), New Point(2, 1), New Point(2, 2)} ' had a duplicate point
     Public Function NearNeighbors(Row As Integer, Col As Integer) As Collection
         Return GeneralNeighbors(Row, Col, NearNeighborsOffSet)
     End Function
@@ -154,6 +159,9 @@
         Return Neighbors
     End Function
 
+    Public Function FarNeighbors(Row As Integer, Col As Integer) As Collection
+        Return GeneralNeighbors(Row, Col, FarNeighborOffsets)
+    End Function
 
 
 #End Region

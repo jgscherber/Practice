@@ -64,7 +64,7 @@
             If theirBlanks = 0 Then Continue For ' if they lack blanks, can't help
 
             Dim PrivateBlanks As New Collection
-            Dim commonBlankCount As Integer
+            Dim commonBlankCount As Integer = 0 ' forgot to define as 0 on creation (but should default to 0?)
 
             Dim Sq As Square
 
@@ -83,10 +83,11 @@
 
             Dim theirPrivateBlankCount As Integer = theirBlanks - commonBlankCount
             Dim minCommonMines As Integer = theySee - theirPrivateBlankCount - theirFlags ' how many mines might there be?
-            If minCommonMines < 0 Then Continue For ' can't be less than 0 ...
+            If minCommonMines < 0 Then minCommonMines = 0 ' can't be less than 0 ...
 
             Dim minCommonClear As Integer = theirBlanks - (theySee - theirFlags) - theirPrivateBlankCount
-            If minCommonClear < 0 Then Continue For
+            If minCommonClear < 0 Then minCommonClear = 0
+            ' wasn't clearing negative, ending loop instead, maybe was fucking up the subtraction
 
             If minCommonClear = 0 And minCommonMines = 0 Then Continue For ' both zero, no information
 
