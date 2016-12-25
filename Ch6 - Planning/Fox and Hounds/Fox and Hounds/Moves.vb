@@ -52,7 +52,7 @@
                         Neighbors(ss).Add(finalss, finalss.ToString)
                     End If
 
-                    finalss = finalss - 4
+                    finalss = ss - 4
                     MovesUp(ss).Add(finalss, finalss.ToString)
                     Neighbors(ss).Add(finalss, finalss.ToString)
 
