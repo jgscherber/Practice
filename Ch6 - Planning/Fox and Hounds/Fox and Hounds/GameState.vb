@@ -63,26 +63,123 @@
             End If
         Next
 
+        ' Still unsure what this is doing... looking for shortest path??
         Dim NeedsMorePasses As Boolean = True
         While NeedsMorePasses
             NeedsMorePasses = False ' done unless need to go through again
             For i = 4 To 31
                 StateSquare = Squares(i)
-
-
-
-
-            Next
+                If StateSquare.Holds <> Checker.Hound Then
+                    For Each ss In Moves.Neighbors(i)
+                        If Squares(ss).Steps + 1 < StateSquare.Steps Then ' how is steps defined??
+                            StateSquare.Steps = Squares(ss).Steps + 1
+                            StateSquare.Kind = SquareColor.White
+                            NeedsMorePasses = True
+                        End If
+                    Next ss
+                End If
+            Next i
         End While
 
+        ' Is the fox trapped?
+        StateSquare = Squares(Fox) ' StateSquare changed to whatever is currently being worked on
+        Dim CanMove As Boolean = False
+        For Each ss In Moves.Neighbors(Fox)
+            If Squares(ss).Holds <> Checker.Hound Then
+                CanMove = True
+            End If
+        Next ss
 
+        ' Set the game rank
+        If Not CanMove Then ' if no possible moves available to the fox, it's trapped!
+            StateSquare.Steps = TRAPPED
+            Rank = TRAPPED
+        Else ' it can move
+            If StateSquare.Steps < UNREACHABLE Then
+                Rank = StateSquare.Steps
+            Else
+                ' Rank = TRAPPED - NaiveBlackCount()
+                Rank = TRAPPED - BetterBlackCount()
+            End If
+        End If
+    End Sub
 
+    Private Function NaiveBlackCount() As Integer ' count the number of black squares (suboptimal)
+        Dim NBC As Integer = 0
+        For i = 0 To 31
+            If Squares(i).Kind = SquareColor.Black Then NBC = NBC + 1
+        Next
+        Return NBC
+    End Function
+    Private Function BetterBlackCount() As Integer
+        Dim BN As New Collection
+        Dim stopAt As Integer = 1
+        Dim startAt As Integer = 1
+        Dim ss As Integer
+        Dim pbs As Integer
 
+        Dim i As Integer
+        BN.Add(Fox, Fox.ToString) ' add the foxes location
+        While startAt <= stopAt
+            For i = startAt To stopAt
+                ss = CInt(BN(i))
+                For Each pbs In Moves.Neighbors(ss)
+                    If Squares(pbs).Holds = Checker.None Then ' ok space to move to
+                        If Not BN.Contains(pbs.ToString) Then ' check if it's already in our collection
+                            BN.Add(pbs, pbs.ToString)
+                        End If
+                    End If
+                Next pbs
+            Next i
+            startAt = stopAt + 1
+            stopAt = BN.Count ' will increment if one is added
+        End While
+        Return BN.Count + 4 ' add 4 for the hound squares
+    End Function
+#End Region
+#Region "Public Methods"
+    Public Sub MarkButtons(Board() As Button) ' make the board
+        Dim i As Integer
+        Dim BoardSquare As Button
+        Dim StateSquare As SquareData
 
+        For i = 0 To 31
+            BoardSquare = Board(i)
+            StateSquare = Squares(i)
 
-
+            Select Case StateSquare.Kind
+                Case SquareColor.Black
+                    BoardSquare.BackColor = Color.Black ' change button attribute to match game attribute
+                Case SquareColor.Green
+                    BoardSquare.BackColor = Color.Green
+                Case SquareColor.White
+                    BoardSquare.BackColor = Color.White
+            End Select
+            Select Case StateSquare.Holds
+                Case Checker.Fox
+                    BoardSquare.Text = "Fox"
+                    ' Fox square gets special coloring
+                    Select Case StateSquare.Kind
+                        Case SquareColor.White
+                            BoardSquare.BackColor = Color.LightPink
+                        Case SquareColor.Black
+                            BoardSquare.BackColor = Color.Red
+                        Case SquareColor.Green
+                            BoardSquare.BackColor = Color.LightGreen
+                    End Select
+                Case Checker.Hound
+                    BoardSquare.Text = "Hnd"
+                    BoardSquare.BackColor = Color.DarkGray
+                Case Checker.None
+                    Select Case StateSquare.Kind
+                        Case SquareColor.Black, SquareColor.Green
+                            BoardSquare.Text = ""
+                        Case SquareColor.White
+                            BoardSquare.Text = Squares(i).Steps.ToString
+                    End Select
+            End Select
+        Next i
     End Sub
 #End Region
-
 
 End Class
