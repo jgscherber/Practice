@@ -28,4 +28,29 @@
         UndoButton.Enabled = False ' undo code hasnt been setup yet
         Call ThisGame.MarkButtons(BoardSquares)
     End Sub
+
+    Private Sub UndoButton_Click(sender As Object, e As EventArgs) Handles UndoButton.Click
+        If PriorBoards.Count > 0 Then
+            ThisGame = CType(PriorBoards(PriorBoards.Count), GameState) ' set the last element in PriorBoards to current gamestate
+            PriorBoards.Remove(PriorBoards.Count) ' then remove it
+            UndoButton.Enabled = (PriorBoards.Count > 0) ' clever!
+            Call ThisGame.MarkButtons(BoardSquares) ' redraw the squares
+        End If
+    End Sub
+
+    Public Property CurrentGameState() As GameState
+        Get
+            Return ThisGame
+        End Get
+        Set(value As GameState)
+            If ThisGame IsNot Nothing Then
+                PriorBoards.Add(ThisGame) ' when a new game board is created, move the previous to our PriorBoards collection
+                UndoButton.Enabled = True ' and allow the Undo to be used now
+            End If
+            ThisGame = value ' set the new board to the current
+            Call ThisGame.MarkButtons(BoardSquares) ' redraw the board with new configuration
+        End Set
+    End Property
+
+
 End Class

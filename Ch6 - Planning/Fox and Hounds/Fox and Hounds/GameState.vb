@@ -7,7 +7,8 @@
     Dim Squares(31) As SquareData
 
 #Region "Class New"
-    Public Sub New() ' setup a new game
+    ' setup a new game
+    Public Sub New()
         Dim i As Integer
 
         Fox = 30 ' set fox location on board
@@ -21,8 +22,11 @@
         Next
         Call ColorMe() ' make square visible
     End Sub
+
 #End Region
+
 #Region "Internal Stuff"
+
     Protected Sub ColorMe()
         Dim StateSquare As SquareData
         Dim i As Integer
@@ -103,14 +107,15 @@
             End If
         End If
     End Sub
-
-    Private Function NaiveBlackCount() As Integer ' count the number of black squares (suboptimal)
+    ' count the number of black squares (suboptimal)
+    Private Function NaiveBlackCount() As Integer
         Dim NBC As Integer = 0
         For i = 0 To 31
             If Squares(i).Kind = SquareColor.Black Then NBC = NBC + 1
         Next
         Return NBC
     End Function
+    ' optimal
     Private Function BetterBlackCount() As Integer
         Dim BN As New Collection
         Dim stopAt As Integer = 1
@@ -136,9 +141,12 @@
         End While
         Return BN.Count + 4 ' add 4 for the hound squares
     End Function
+
 #End Region
+
 #Region "Public Methods"
-    Public Sub MarkButtons(Board() As Button) ' make the board
+    ' make the board
+    Public Sub MarkButtons(Board() As Button)
         Dim i As Integer
         Dim BoardSquare As Button
         Dim StateSquare As SquareData
@@ -180,6 +188,40 @@
             End Select
         Next i
     End Sub
+
+    ' only fox and hound pieces can move, good to know where they're at
+    Public Function FoxAt() As Integer
+        Return (Fox)
+    End Function
+    Public Function HoundsAt() As Integer()
+        Dim Locations(3) As Integer
+        Dim i As Integer
+        For i = 0 To 3
+            Locations(i) = Hounds(i)
+        Next
+        Return Locations
+    End Function
+    ' can only move to empty squares
+    Public Function HasChecker(ss As Integer) As Boolean
+        If ss = Fox Then Return True
+        Dim i As Integer
+        For i = 0 To 3
+            If ss = Hounds(i) Then Return True
+        Next
+        Return False
+    End Function
+
+    ' AI methods
+    ' Fox wants 0, Hounds want TRAPPED (127)
+    Public Function GameRank() As Integer
+        Return Rank
+    End Function
+    ' turn count
+    Public Function MoveCount() As Integer
+        Return Turn
+    End Function
+
+
 #End Region
 
 End Class
