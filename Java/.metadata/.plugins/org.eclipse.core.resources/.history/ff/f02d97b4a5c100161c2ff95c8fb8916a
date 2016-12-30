@@ -1,9 +1,0 @@
-
-public class Exercise_32 {
-
-	public static void main(String[] args) {
-		// Number less than 10000 with the most divisors
-
-	}
-
-}

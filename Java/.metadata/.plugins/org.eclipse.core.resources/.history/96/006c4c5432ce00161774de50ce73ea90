@@ -1,0 +1,20 @@
+
+public class TenThousandRolls {
+	public static int TenKRolls(int value)
+	{
+		int c = 0;
+		int total = 0;
+		double average = 0;
+		while(c<10000)
+		{
+			c++;
+			total += SpecificDiceRoll.RollCounter(value);
+		}
+		average = ((double)total)/10000.0;
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
