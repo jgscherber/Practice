@@ -1,0 +1,23 @@
+import java.util.Scanner;
+
+public class SpecificDiceRoll {
+	private static int RollCounter(int value)
+	{
+		//Takes in a value that the dice should equal
+		//Returns the number of rolls it took to get the value
+		int count = 0;
+		int diceRoll  = 0;
+		if ((value>13) || (value<2))
+			throw new IllegalArgumentException;
+		while(value != diceRoll)
+		{
+			int dice1 = 
+		}
+		
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

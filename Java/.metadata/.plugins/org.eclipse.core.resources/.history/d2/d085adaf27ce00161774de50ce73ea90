@@ -1,0 +1,17 @@
+import java.util.Scanner;
+
+public class Capitalize {
+	
+	public String printCapitalized(String sentance){
+		
+		
+	}
+	
+	
+	public static void main(String[] args) {
+		Scanner stdin = new Scanner(System.in);
+		
+
+	}
+
+}

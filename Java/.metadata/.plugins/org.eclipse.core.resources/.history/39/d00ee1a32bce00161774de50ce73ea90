@@ -1,0 +1,21 @@
+import java.util.Scanner;
+
+
+public class Convertor {
+	
+	private static int hexValue(char hex){
+		// takes a hex letter, runs it through switch to get decimal value
+	}
+	
+	
+	public static void main(String[] args) {
+		Scanner stdin = new Scanner(System.in);
+		
+		
+		int value = 0;
+		for(int i =0; i< str.length();i++)
+			value = value * 16 + hexValue(str.charAt(i));
+
+	}
+
+}

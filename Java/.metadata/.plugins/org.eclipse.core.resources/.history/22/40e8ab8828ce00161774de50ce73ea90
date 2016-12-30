@@ -1,0 +1,21 @@
+import java.util.Scanner;
+
+public class Capitalize {
+	
+	// encapsulation of pure function
+	
+	public static String printCapitalized(String sentance){
+		
+		
+	}
+	
+	
+	public static void main(String[] args) {
+		Scanner stdin = new Scanner(System.in);
+		System.out.print("Enter String to capitalize: ");
+		String o_sentence = stdin.nextLine();
+		String n_sentence = printCapitalized(o_sentence); // static functions can only reference other static functions
+		System.out.print("The capitalized sentence is \"" + n_sentence +"\"");
+	}
+
+}
