@@ -16,6 +16,7 @@
         AllowDrop = True ' attribute of the Button class that it's inheriting from
         Me.Font = New System.Drawing.Font("Arial", 9, FontStyle.Bold)
     End Sub
+
 #Region "Drag-and-Drop"
     Private Sub FaHButton_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
         Dim MainForm As Board = CType(Me.Parent, Board) ' parent of the button is the board
@@ -83,4 +84,5 @@
     End Sub
 
 #End Region
+
 End Class

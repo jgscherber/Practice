@@ -76,6 +76,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI.vb" />
     <Compile Include="Board.vb">
       <SubType>Form</SubType>
     </Compile>

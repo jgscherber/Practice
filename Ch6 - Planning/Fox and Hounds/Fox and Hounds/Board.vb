@@ -22,6 +22,21 @@
         Call ResetButton_Click(Nothing, Nothing)
     End Sub
 
+    Public Property CurrentGameState() As GameState
+        Get
+            Return ThisGame
+        End Get
+        Set(value As GameState)
+            If ThisGame IsNot Nothing Then
+                PriorBoards.Add(ThisGame) ' when a new game board is created, move the previous to our PriorBoards collection
+                UndoButton.Enabled = True ' and allow the Undo to be used now
+            End If
+            ThisGame = value ' set the new board to the current
+            Call ThisGame.MarkButtons(BoardSquares) ' redraw the board with new configuration
+        End Set
+    End Property
+
+#Region "Button Clicks"
     Private Sub ResetButton_Click(sender As Object, e As EventArgs) Handles ResetButton.Click
         ThisGame = New GameState
         PriorBoards.Clear()
@@ -38,19 +53,31 @@
         End If
     End Sub
 
-    Public Property CurrentGameState() As GameState
-        Get
-            Return ThisGame
-        End Get
-        Set(value As GameState)
-            If ThisGame IsNot Nothing Then
-                PriorBoards.Add(ThisGame) ' when a new game board is created, move the previous to our PriorBoards collection
-                UndoButton.Enabled = True ' and allow the Undo to be used now
-            End If
-            ThisGame = value ' set the new board to the current
-            Call ThisGame.MarkButtons(BoardSquares) ' redraw the board with new configuration
-        End Set
-    End Property
+    Private Sub FoxButton_Click(sender As Object, e As EventArgs) Handles FoxButton.Click
+        Me.Cursor = Cursors.WaitCursor
+        Dim startTime As Date = Now ' for performance measurements
+        Me.CurrentGameState = AI.MoveFox(ThisGame)
+        Debug.WriteLine("Fox move took " & HowLong(startTime) & "ms") ' HowLong user defined
+        Me.Cursor = Cursors.Default
+    End Sub
+
+    Private Sub HoundButton_Click(sender As Object, e As EventArgs) Handles HoundButton.Click
+        Me.Cursor = Cursors.WaitCursor
+        Dim startTime As Date = Now
+        Me.CurrentGameState = AI.MoveHounds(ThisGame)
+        Debug.WriteLine("Hounds move took " & HowLong(startTime) & "ms")
+    End Sub
+
+
+#End Region
+
+    ' helper function to get performance metrics
+    Private Function HowLong(startTime As Date) As String
+        Dim stopTime As Date = Now
+        Dim secs As Integer = stopTime.Subtract(startTime).Seconds ' only returns the seconds
+        Dim ms As Integer = stopTime.Subtract(startTime).Milliseconds ' only returns the milliseconds
+        Return (secs * 1000 + ms).ToString ' addes seconds and milliseconds and returns
+    End Function
 
 
 End Class
