@@ -22,6 +22,22 @@
         Next
         Call ColorMe() ' make square visible
     End Sub
+    ' clone gamestate for making next move
+    Public Sub New(GS As GameState) ' like java, differentiate based on parameters
+        Dim i As Integer
+
+        ' copy the attributes over
+        Fox = GS.Fox
+        For i = 0 To 3
+            Hounds(i) = GS.Hounds(i)
+        Next i
+        For i = 0 To 31
+            Squares(i) = New SquareData
+        Next i
+        Turn = GS.Turn
+    End Sub
+
+
 
 #End Region
 
@@ -220,7 +236,22 @@
     Public Function MoveCount() As Integer
         Return Turn
     End Function
-
+    ' fox mover test
+    Public Function ProposeFoxTo(targetSquare As Integer) As GameState
+        Dim afterMove As GameState = New GameState(Me) ' called new object with an object passed, means it was copied
+        afterMove.Turn = afterMove.Turn + 1
+        afterMove.Fox = targetSquare
+        afterMove.ColorMe()
+        Return afterMove
+    End Function
+    ' hound mover test
+    Public Function ProposeHoundTo(houndNumber As Integer, targetSquare As Integer) As GameState
+        Dim afterMove As GameState = New GameState(Me) ' when instantiated with an object, copies it
+        afterMove.Turn = afterMove.Turn + 1
+        afterMove.Hounds(houndNumber) = targetSquare
+        afterMove.ColorMe()
+        Return afterMove
+    End Function
 
 #End Region
 
