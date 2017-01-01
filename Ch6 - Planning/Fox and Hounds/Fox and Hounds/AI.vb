@@ -97,10 +97,15 @@
 
 #Region "With Lookahead"
     Private Function Fox2(GS As GameState, depth As Integer, WantMove As Boolean) As GameState
-        If GS.GameRank = 0 Or GS.GameRank = TRAPPED Then
+
+        If GS.GameRank = 0 Or GS.GameRank = TRAPPED Then ' check if game is already over
             Debug.WriteLine("Fox2: Game over, not moving")
             Return GS
         End If
+
+        Dim Candidate As GameState = ConsultFoxBook(GS)
+        If Candidate IsNot Nothing Then Return Candidate
+
 
         Dim ss As Integer
         Dim SortedMoves As New Collection
@@ -119,7 +124,7 @@
             Return GS
         End If
 
-        Dim Candidate As GameState
+        'Dim Candidate As GameState 
         Candidate = CType(SortedMoves(1), GameState)
 
         'is freedom reachable
@@ -251,5 +256,21 @@
 
 #End Region
 
+#Region "Book of Moves"
+    Private Function ConsultFoxBook(GS As GameState) As GameState
+        If GS.MoveCount > 8 Then ' only applicable for first 8 moves
+            Return Nothing
+        End If
+
+        Dim bestMove As Byte = 64
+        Dim ss As Byte ' why Bytes and not integer
+        For Each ss In Moves.Neighbors(GS.FoxAt)
+            If Not GS.HasChecker(ss) Then
+                If ss < bestMove Then bestMove = ss
+            End If
+        Next ss
+        Return GS.ProposeFoxTo(bestMove)
+    End Function
+#End Region
 
 End Module
