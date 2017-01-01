@@ -66,6 +66,7 @@
         Dim startTime As Date = Now
         Me.CurrentGameState = AI.MoveHounds(ThisGame)
         Debug.WriteLine("Hounds move took " & HowLong(startTime) & "ms")
+        Me.Cursor = Cursors.Default
     End Sub
 
 
