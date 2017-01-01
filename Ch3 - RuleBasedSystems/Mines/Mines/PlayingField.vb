@@ -209,6 +209,57 @@
         ThoughtsTextBox.AppendText(someThought)
     End Sub
 
+    Public Sub ExecuteBook()
+
+        Dim FirstSquares As New Collection
+        Dim SecondSquares As New Collection
+        ' top-left corner
+        FirstSquares.Add(Field(1, 1))
+        SecondSquares.Add(Field(0, 0))
+        ' bottom-right corner
+        FirstSquares.Add(Field(NumRows - 2, NumCols - 2))
+        SecondSquares.Add(Field(NumRows - 1, NumCols - 1))
+        ' bottom-left corner
+        FirstSquares.Add(Field(NumRows - 2, 1))
+        SecondSquares.Add(Field(NumRows - 2, 0))
+        ' top-right corner
+        FirstSquares.Add(Field(1, NumCols - 2))
+        SecondSquares.Add(Field(0, NumCols - 1))
+        Dim Col As Integer
+        For Col = 1 To NumCols \ 4
+            ' top row pairs
+            FirstSquares.Add(Field(1, NumCols \ 2 + Col)) ' alternating back and forth unlong the midpoint
+            SecondSquares.Add(Field(0, NumCols \ 2 + Col))
+            FirstSquares.Add(Field(1, NumCols \ 2 - Col))
+            SecondSquares.Add(Field(0, NumCols \ 2 - Col))
+
+            ' bottom row pairs
+            FirstSquares.Add(Field(NumRows - 1, NumCols \ 2 + Col))
+            SecondSquares.Add(Field(NumRows, NumCols \ 2 + Col))
+            FirstSquares.Add(Field(NumRows - 1, NumCols \ 2 - Col))
+            SecondSquares.Add(Field(NumRows, NumCols \ 2 - Col))
+
+        Next Col
+
+        ' the left and right edges could be added too
+
+        Dim pass As Integer
+        For pass = 1 To 2
+            Dim FirstMove As Square
+            Dim SecondMove As Square
+            Dim i As Integer
+            For i = 1 To FirstSquares.Count
+                FirstMove = FirstSquares(i)
+                SecondMove = SecondSquares(i)
+                If pass = 1 Then
+                    If BookSecondMove(FirstMove, SecondMove, Me) > 0 Then Return
+                Else
+                    If BookFirstMove(FirstMove, SecondMove, Me) > 0 Then Return
+                End If
+            Next i
+        Next pass
+    End Sub
 
 #End Region
+
 End Class

@@ -111,5 +111,37 @@
         
     End Sub
 
+#Region "Book of Moves"
+
+    Public Function BookFirstMove(FirstSq As Square, SecondSq As Square, theField As PlayingField) As Integer
+        If FirstSq.IsRevealed Then Return 0 ' has the square already been clicked?
+        If FirstSq.Text <> "" Then Return 0 ' avoid flagged squares
+        If SecondSq.Text <> "" Then Return 0 ' 2nd square also can't be flagged
+
+        Dim Sq As Square
+        For Each Sq In theField.NearNeighbors(FirstSq.R, FirstSq.C)
+            If Sq.IsRevealed() Then Return 0 ' don't click any with revealed neighbors
+        Next Sq
+
+        theField.MoreThoughts("Book First Move attempting R" & FirstSq.R.ToString &
+                              "C" & FirstSq.C.ToString)
+        Call FirstSq.LeftClick()
+        Return 1 ' one move done
+    End Function
+
+    Public Function BookSecondMove(FirstSq As Square, SecondSq As Square, theField As PlayingField) As Integer
+        If FirstSq.Text <> "1" Then Return 0 ' only continue if minimal risk
+
+        Dim Sq As Square
+        For Each Sq In theField.NearNeighbors(FirstSq.R, FirstSq.C)
+            If Sq.IsRevealed() Then Return 0
+        Next Sq
+
+        theField.MoreThoughts("Book SEcond Move attempting R" &
+                              SecondSq.R.ToString & "C" & SecondSq.C.ToString)
+        Call SecondSq.LeftClick()
+        Return 1
+    End Function
+#End Region
 
 End Module

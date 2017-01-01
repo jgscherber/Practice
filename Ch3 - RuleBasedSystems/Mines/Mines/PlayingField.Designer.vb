@@ -23,18 +23,22 @@ Partial Class PlayingField
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.ThoughtsTextBox = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.MinesLeftLabel = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.MovesLeftLabel = New System.Windows.Forms.Label()
         Me.ExpertButton = New System.Windows.Forms.Button()
-        Me.ThoughtsTextBox = New System.Windows.Forms.TextBox()
+        Me.AutoButton = New System.Windows.Forms.Button()
+        Me.BookButton = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.White
+        Me.Panel1.Controls.Add(Me.BookButton)
+        Me.Panel1.Controls.Add(Me.AutoButton)
         Me.Panel1.Controls.Add(Me.ThoughtsTextBox)
         Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Controls.Add(Me.MinesLeftLabel)
@@ -45,6 +49,16 @@ Partial Class PlayingField
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(906, 124)
         Me.Panel1.TabIndex = 0
+        '
+        'ThoughtsTextBox
+        '
+        Me.ThoughtsTextBox.Location = New System.Drawing.Point(487, 3)
+        Me.ThoughtsTextBox.Multiline = True
+        Me.ThoughtsTextBox.Name = "ThoughtsTextBox"
+        Me.ThoughtsTextBox.ReadOnly = True
+        Me.ThoughtsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.ThoughtsTextBox.Size = New System.Drawing.Size(416, 118)
+        Me.ThoughtsTextBox.TabIndex = 6
         '
         'Label2
         '
@@ -99,15 +113,23 @@ Partial Class PlayingField
         Me.ExpertButton.Text = "Expert"
         Me.ExpertButton.UseVisualStyleBackColor = True
         '
-        'ThoughtsTextBox
+        'AutoButton
         '
-        Me.ThoughtsTextBox.Location = New System.Drawing.Point(487, 3)
-        Me.ThoughtsTextBox.Multiline = True
-        Me.ThoughtsTextBox.Name = "ThoughtsTextBox"
-        Me.ThoughtsTextBox.ReadOnly = True
-        Me.ThoughtsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.ThoughtsTextBox.Size = New System.Drawing.Size(416, 118)
-        Me.ThoughtsTextBox.TabIndex = 6
+        Me.AutoButton.Location = New System.Drawing.Point(281, 2)
+        Me.AutoButton.Name = "AutoButton"
+        Me.AutoButton.Size = New System.Drawing.Size(75, 23)
+        Me.AutoButton.TabIndex = 7
+        Me.AutoButton.Text = "AI Auto"
+        Me.AutoButton.UseVisualStyleBackColor = True
+        '
+        'BookButton
+        '
+        Me.BookButton.Location = New System.Drawing.Point(281, 32)
+        Me.BookButton.Name = "BookButton"
+        Me.BookButton.Size = New System.Drawing.Size(75, 23)
+        Me.BookButton.TabIndex = 8
+        Me.BookButton.Text = "AI Book"
+        Me.BookButton.UseVisualStyleBackColor = True
         '
         'PlayingField
         '
@@ -130,4 +152,6 @@ Partial Class PlayingField
     Friend WithEvents Label2 As Label
     Friend WithEvents MinesLeftLabel As Label
     Friend WithEvents ThoughtsTextBox As TextBox
+    Friend WithEvents BookButton As Button
+    Friend WithEvents AutoButton As Button
 End Class
