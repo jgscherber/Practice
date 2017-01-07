@@ -150,8 +150,44 @@
             If Not Bag.Contains(key) Then
                 Bag.Add(New Collection, key)
             End If
+            myBag = CType(Bag(key), Collection)
+            myBag.Add(Toy)
         Next
+
+        Dim Behind As Vehicle
+        Dim Ahead As Vehicle
+
+        Dim i As Integer
+        For Each myBag In Bag ' same sorting code as in SortToys() w/o swapping
+            For i = 1 To myBag.Count - 1
+                Behind = CType(ToyBox(i), Vehicle) ' back has the lowest subscript
+                Ahead = CType(ToyBox(i + 1), Vehicle) ' ahead has the next subscript
+                If Ahead.X < Behind.X Then ' if ordering isn't correct
+                    ' Debug.WriteLine("***" & Behind.ID & " has passed " & _ Ahead.ID)
+                    ToyBox.Remove(i + 1) ' swap them
+                    ToyBox.Add(Ahead,, i)
+                End If
+            Next i
+        Next myBag
     End Sub
 
+    Private Sub ThinkTimer_Tick(sender As Object, e As EventArgs) Handles ThinkTimer.Tick
+        Call SortToys()
 
+        Dim Toy As Vehicle
+        Dim i As Integer
+
+        ' run the AI front to back
+        For i = ToyBox.Count To 1 Step -1 ' going backwards
+            Toy = CType(ToyBox(i), Vehicle)
+            Toy.Think(i, Me)
+        Next i
+    End Sub
+
+    Private Sub PanScrollBar_Scroll(sender As Object, e As ScrollEventArgs) Handles PanScrollBar.Scroll
+        Dim Toy As Vehicle
+        For Each Toy In ToyBox
+            Toy.Draw(PanScrollBar.Value) ' redraws the buttons using the scrollbars current position as the offset
+        Next
+    End Sub
 End Class
