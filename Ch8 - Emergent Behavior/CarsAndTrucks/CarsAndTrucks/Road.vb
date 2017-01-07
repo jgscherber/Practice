@@ -133,8 +133,25 @@
             PanScrollBar.Value = refVehicle.X - offset
         End If
 
-
+        PanScrollBar.LargeChange = Me.Width \ 4
+        Call CollisionDetect()
 
     End Sub
+
+    Private Sub CollisionDetect()
+        Dim Toy As Vehicle
+        Dim Bag As New Collection ' groups vehicles by lane
+        Dim myBag As Collection
+
+        Dim key As String
+
+        For Each Toy In ToyBox
+            key = Toy.Lane.ToString
+            If Not Bag.Contains(key) Then
+                Bag.Add(New Collection, key)
+            End If
+        Next
+    End Sub
+
 
 End Class
