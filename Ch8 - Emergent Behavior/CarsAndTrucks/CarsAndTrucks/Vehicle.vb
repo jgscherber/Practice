@@ -107,8 +107,30 @@
         Return myLane
     End Function
 
+    Public Sub MoveForward(FrameRate As Integer)
+        Xpos += CurrentV / FrameRate
+    End Sub
+
 #End Region
 
+#Region "Reference Car"
+
+    Public Sub MoveFloatingMarker(refV As Vehicle, FrameRate As Integer, halfSize As Integer)
+        If refV.Speed = 0 Then Return
+        Xpos -= refV.Speed / FrameRate ' marker appears to go backward
+        While Xpos < refV.X - halfSize ' after it falls off the end, put it back to the front
+            Xpos += 2 * halfSize
+        End While
+        While Xpos > refV.X + halfSize + 1 ' reset it if the refV gets too fast
+            Xpos -= 2 * halfSize
+        End While
+    End Sub
+
+    Private Sub Body_Click(sender As Object, e As EventArgs) Handles Body.Click
+        Dim theRoad As Road = CType(Body.Parent, Road)
+        theRoad.ReferenceVehicle = Me
+    End Sub
+#End Region
 
 
 End Class

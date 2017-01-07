@@ -30,6 +30,9 @@ Partial Class Road
         Me.ThinkTimer = New System.Windows.Forms.Timer(Me.components)
         Me.PanScrollBar = New System.Windows.Forms.HScrollBar()
         Me.RefLabel = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.LanesUpDown = New System.Windows.Forms.NumericUpDown()
+        CType(Me.LanesUpDown, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'FPSLabel
@@ -62,11 +65,14 @@ Partial Class Road
         Me.StopButton.Text = "Stop"
         Me.StopButton.UseVisualStyleBackColor = True
         '
+        'AnimationTimer
+        '
+        '
         'PanScrollBar
         '
-        Me.PanScrollBar.Location = New System.Drawing.Point(1195, 235)
+        Me.PanScrollBar.Location = New System.Drawing.Point(319, 229)
         Me.PanScrollBar.Name = "PanScrollBar"
-        Me.PanScrollBar.Size = New System.Drawing.Size(80, 17)
+        Me.PanScrollBar.Size = New System.Drawing.Size(956, 18)
         Me.PanScrollBar.SmallChange = 10
         Me.PanScrollBar.TabIndex = 3
         '
@@ -79,11 +85,32 @@ Partial Class Road
         Me.RefLabel.TabIndex = 4
         Me.RefLabel.Text = "Label1"
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(223, 234)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(36, 13)
+        Me.Label1.TabIndex = 5
+        Me.Label1.Text = "Lanes"
+        '
+        'LanesUpDown
+        '
+        Me.LanesUpDown.Location = New System.Drawing.Point(266, 229)
+        Me.LanesUpDown.Maximum = New Decimal(New Integer() {5, 0, 0, 0})
+        Me.LanesUpDown.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.LanesUpDown.Name = "LanesUpDown"
+        Me.LanesUpDown.Size = New System.Drawing.Size(35, 20)
+        Me.LanesUpDown.TabIndex = 6
+        Me.LanesUpDown.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        '
         'Road
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1284, 261)
+        Me.Controls.Add(Me.LanesUpDown)
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.RefLabel)
         Me.Controls.Add(Me.PanScrollBar)
         Me.Controls.Add(Me.StopButton)
@@ -91,6 +118,7 @@ Partial Class Road
         Me.Controls.Add(Me.FPSLabel)
         Me.Name = "Road"
         Me.Text = "Cars and Trucks"
+        CType(Me.LanesUpDown, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -103,4 +131,6 @@ Partial Class Road
     Friend WithEvents ThinkTimer As Timer
     Friend WithEvents PanScrollBar As HScrollBar
     Friend WithEvents RefLabel As Label
+    Friend WithEvents Label1 As Label
+    Friend WithEvents LanesUpDown As NumericUpDown
 End Class

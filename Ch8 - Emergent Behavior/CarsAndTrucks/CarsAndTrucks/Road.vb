@@ -29,14 +29,27 @@
         ToyBox.Add(New Vehicle(200, 55, Me, 1000, 50, "Truck"))
         ToyBox.Add(New Vehicle(200, 50, Me, 1400, 50, "Truck"))
 
+        Me.ReferenceVehicle = CType(ToyBox(1 + ToyBox.Count \ 2), Vehicle) ' middle vehicle is the default reference
+
     End Sub
 #End Region
 
-    Dim FrameRate As Integer = 6
-    Dim ThinkRate As Integer
+    Dim FrameRate As Integer = 15
+    Dim ThinkRate As Integer = 2
 
     Dim startTime As Date
     Dim framecount As Integer
+
+    Public WriteOnly Property ReferenceVehicle() As Vehicle
+        Set(value As Vehicle)
+            refVehicle = value
+            RefLabel.Text = refVehicle.ID
+        End Set
+    End Property
+
+    Public Function Lanes() As Integer
+        Return CInt(LanesUpDown.Value)
+    End Function
 
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
         startTime = Now
@@ -47,9 +60,81 @@
         ThinkTimer.Interval = CInt(1000 / ThinkRate)
         ThinkTimer.Enabled = True
 
+        FPSLabel.Visible = False
+        PanScrollBar.Enabled = False
 
     End Sub
 
+    Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
+        AnimationTimer.Enabled = False
+        ThinkTimer.Enabled = False
 
+        Dim stopTime As Date = Now
+        Dim min As Integer = stopTime.Subtract(startTime).Minutes
+        Dim secs As Integer = stopTime.Subtract(startTime).Seconds + 60 * min
+        If secs < 1 Then secs = 1
+
+        FPSLabel.Text = Format((framecount / secs), "0.0") & " FPS "
+        FPSLabel.Visible = True
+        PanScrollBar.Enabled = True
+    End Sub
+
+    ' every one second tick of the animation timer
+    Private Sub AnimationTimer_Tick(sender As Object, e As EventArgs) Handles AnimationTimer.Tick
+        Dim Toy As Vehicle
+
+        framecount += 1
+        Dim offset As Integer = CInt(Me.Width / 2)
+
+        For Each Toy In ToyBox
+            Toy.MoveForward(FrameRate)
+            ' Toy.Draw(-offset) ' ground reference
+            Toy.Draw(refVehicle.X - offset) ' vehicle reference
+
+            FloatingMarker.MoveFloatingMarker(refVehicle, FrameRate, offset)
+            FloatingMarker.Draw(refVehicle.X - offset)
+        Next Toy
+    End Sub
+
+    ' car tracking code
+    Private refVehicle As Vehicle
+    Dim FloatingMarker As New Vehicle(2, 0, Me, 0, 0, "Floating Marker") ' mile marker
+
+    ' need collision detect and list sorting
+    Private Sub SortToys()
+        Dim swapped As Boolean
+        Dim Behind As Vehicle
+        Dim Ahead As Vehicle
+
+        While swapped
+            swapped = False
+            Dim i As Integer
+            For i = 1 To ToyBox.Count - 1 ' sorting ToyBox
+                Behind = CType(ToyBox(i), Vehicle) ' back has the lowest subscript
+                Ahead = CType(ToyBox(i + 1), Vehicle) ' ahead has the next subscript
+                If Ahead.X < Behind.X Then ' if ordering isn't correct
+                    swapped = True
+                    ' Debug.WriteLine("***" & Behind.ID & " has passed " & _ Ahead.ID)
+                    ToyBox.Remove(i + 1) ' swap them
+                    ToyBox.Add(Ahead,, i)
+                End If
+            Next
+        End While
+
+        ' grab the leader and trailer to set scrollbar
+        Behind = CType(ToyBox(1), Vehicle)
+        Ahead = CType(ToyBox(ToyBox.Count), Vehicle)
+
+        Dim offset As Integer = CInt(Me.Width / 2)
+
+        PanScrollBar.Minimum = Behind.X - offset
+        PanScrollBar.Maximum = Ahead.X - offset
+        If refVehicle IsNot Nothing Then
+            PanScrollBar.Value = refVehicle.X - offset
+        End If
+
+
+
+    End Sub
 
 End Class
