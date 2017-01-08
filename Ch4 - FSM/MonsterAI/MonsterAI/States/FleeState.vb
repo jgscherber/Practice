@@ -27,6 +27,7 @@ Public Class FleeState
 
     Public Overrides Sub Update(World As Monster)
         World.Say("Keep running!")
+        World.BackColor = Color.LightGray
     End Sub
 End Class
 
