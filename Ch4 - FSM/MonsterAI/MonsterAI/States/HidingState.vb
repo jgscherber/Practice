@@ -31,7 +31,7 @@ Public Class HidingState
 
     Public Overrides Sub Update(World As Monster)
         World.Say("Shhh! I'm hiding.")
-        World.BackColor = Color.LightGreen
+        'World.BackColor = Color.LightGreen
     End Sub
 End Class
 

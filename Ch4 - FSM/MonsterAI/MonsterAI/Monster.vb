@@ -26,16 +26,29 @@
     End Sub
 
     Dim Brains As New FSM
+    Dim Feelings As New FSM
     Private Sub Monster_Load(sender As Object, e As EventArgs) Handles Me.Load
         ' adds the states to the machine
         ' Adds a state-stateName value pair to States collection in FSM
         Brains.LoadState(New HidingState)
         Brains.LoadState(New AttackState)
         Brains.LoadState(New FleeState)
+
+
+        Feelings.LoadState(New FeelHappy)
+        Feelings.LoadState(New FeelAfraid)
+        Feelings.LoadState(New FeelAngry)
     End Sub
 
     Private Sub ThinkButton_Click(sender As Object, e As EventArgs) Handles ThinkButton.Click
         Brains.RunAI(Me)
+        Feelings.RunAI(Me)
     End Sub
+#End Region
+
+#Region "Emotions FSM"
+
+
+
 #End Region
 End Class

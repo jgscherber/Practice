@@ -36,7 +36,7 @@ Public Class AttackState
 
     Public Overrides Sub Update(World As Monster)
         World.Say("Keep attack!")
-        World.BackColor = Color.Pink
+        'World.BackColor = Color.Pink
     End Sub
 End Class
 

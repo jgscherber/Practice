@@ -72,6 +72,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FeelAfraid.vb" />
+    <Compile Include="FeelAngry.vb" />
+    <Compile Include="FeelHappy.vb" />
     <Compile Include="States\FleeState.vb" />
     <Compile Include="States\AttackState.vb" />
     <Compile Include="States\BasicState.vb" />
