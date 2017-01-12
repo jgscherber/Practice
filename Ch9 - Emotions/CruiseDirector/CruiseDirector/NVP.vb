@@ -1,4 +1,4 @@
 ﻿Public Class NVP ' needs for a person
     Public name As String
-    Public value As Integer
+    Public value As Double
 End Class

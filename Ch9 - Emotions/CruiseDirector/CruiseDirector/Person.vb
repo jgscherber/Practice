@@ -81,7 +81,7 @@
 
         Dim attr As NVP
         For Each attr In myPreferences
-            opinionated += attr.value & attr.value
+            opinionated += attr.value * attr.value
             view += attr.value
             ld = ld & " " & attr.name & "=" & attr.value.ToString
         Next

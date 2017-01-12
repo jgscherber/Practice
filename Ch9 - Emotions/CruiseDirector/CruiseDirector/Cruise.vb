@@ -29,4 +29,41 @@
             Roster.Add(New Person(surname, MDB))
         Next
     End Sub
+
+    Private Sub DumpButton_Click(sender As Object, e As EventArgs) Handles DumpButton.Click
+        Dim PersonA As Person
+        Dim PersonB As Person
+
+        For Each PersonA In Roster
+            Debug.WriteLine("")
+            Debug.WriteLine(PersonA.LongDump)
+            For Each PersonB In Roster
+                If PersonA IsNot PersonB Then
+                    Call DumpRelationships(PersonA, PersonB)
+                End If
+            Next
+        Next
+
+    End Sub
+
+
+    Private Sub DumpRelationships(PersonA As Person, PersonB As Person)
+        Dim compatibility As Integer = 0
+        Dim activity As String
+        For Each activity In MDB.ActivityList
+            compatibility += PersonA.Likes(activity) * PersonB.Likes(activity)
+        Next
+        ' Debug.WriteLine("[C: " & compatibility.ToString & ", R+R: " & PersonB.CurrentRelationship())
+    End Sub
+
+    Public Sub Interact(PerosnA As Person, PersonB As Person, Need As String, Activity As String)
+        Dim RCa As Integer
+        Dim RCb As Integer
+
+        Dim bonus As Integer = 0
+
+    End Sub
+
+
+
 End Class
