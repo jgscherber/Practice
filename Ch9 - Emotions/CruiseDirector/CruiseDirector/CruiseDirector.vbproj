@@ -97,6 +97,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="NVP.vb" />
+    <Compile Include="Person.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Cruise.resx">
