@@ -1,3 +1,5 @@
+// Exercise 5.4
+import java.util.Scanner;
 
 public class BlackJackHandTest_54 {
 
@@ -7,8 +9,18 @@ public class BlackJackHandTest_54 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
-}
+		Deck cards = new Deck(); // deal cards from
+		BlackjackHand hand = new BlackjackHand(); // deal cards to
+		Scanner stdin = new Scanner(System.in);
+		Card cCard = new Card();
+		boolean cont = true;
+		while(cont) {
+			int numCards = (int)Math.random(); // return 2-6???
+			
+			
+			
+			
+			
+		} // stop continuing
+	} // end main
+} // end class
