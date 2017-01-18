@@ -1,4 +1,4 @@
-// Exercise 5.4
+// Exercise 5.3
 
 
 public class DiceWithStatCalc_53 {
