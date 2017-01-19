@@ -1,0 +1,21 @@
+// Exercise 5.5
+import java.util.Scanner;
+
+public class BlackjackGame_55 {
+	
+	/*
+	 *  Uses a subrouting to play the game, return boolean about whether player won
+	 */	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	} //end main
+	
+	private static boolean game() {
+		
+		
+		
+	} // end game
+	
+
+} // end class
