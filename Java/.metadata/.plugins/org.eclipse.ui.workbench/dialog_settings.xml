@@ -8,12 +8,16 @@
 		<item value="250" key="dialogHeight"/>
 		<item value="350" key="dialogWidth"/>
 		<list key="textEntries">
+			<item value="1"/>
 		</list>
 		<list key="orderedElements">
+			<item value="preferences"/>
 		</list>
 		<list key="orderedProviders">
+			<item value="org.eclipse.ui.actions"/>
 		</list>
 		<list key="textArray">
+			<item value="preferences"/>
 		</list>
 	</section>
 </section>
