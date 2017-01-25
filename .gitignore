@@ -53,8 +53,8 @@ Youtube 60fps search.txt
 # Created by https://www.gitignore.io/api/eclipse
 
 ### Eclipse ###
-p5.dom.js
-p5.sound.js
+.dom.js
+.sound.js
 .metadata
 bin/
 tmp/
