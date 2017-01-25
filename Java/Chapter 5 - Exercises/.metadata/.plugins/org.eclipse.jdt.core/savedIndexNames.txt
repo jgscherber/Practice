@@ -1,2 +1,0 @@
-INDEX VERSION 1.126+/home/scher313/Desktop/Practice/Java/Chapter 5 - Exercises/.metadata/.plugins/org.eclipse.jdt.core
-197583862.index
