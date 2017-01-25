@@ -1,0 +1,22 @@
+import java.util.ArrayList;
+
+import javax.print.attribute.IntegerSyntax;
+
+public class ArrayListTest_71 {
+	
+	public static ArrayList<Integer> generate(int num, int maximum) {
+		ArrayList<Integer> result = new ArrayList<>();
+		
+		
+		
+		
+		
+	}
+	
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
