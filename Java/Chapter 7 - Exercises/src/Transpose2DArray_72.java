@@ -1,5 +1,5 @@
 
-public class Transpose2DArray {
+public class Transpose2DArray_72 {
 	
 	public static int[][] transpose(int[][] input) {
 		int rows = input.length;
