@@ -1,5 +1,6 @@
 package com.example.android.sunshine.app;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -65,17 +67,17 @@ public class ForecastFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // rootView is the top node of parent-child tree
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
 
         String[] data = { // data being put into the list view
-                "Mon 1/16 - Snow - 31/17",
-                "Tue 1/17 - Sunny - 40/20",
-                "Wed 1/18 - Cloudy - 35/17",
-                "Thr 1/19 - Sunny - 42/22",
-                "Fri 1/20 - Snow - 20/10",
-                "Sat 1/21 - Snow - 19/12",
-                "Sun 1/22 - Sunny - 15/7",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
         };
 
         List<String> weekForecast = new ArrayList<String>(
@@ -91,8 +93,24 @@ public class ForecastFragment extends Fragment {
         // convert ListView to ListView type - searches through a parent-child tree
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(mForecastAdapter);
-        FetchWeatherTask weatherTask = new FetchWeatherTask(); // graps the weather data on create
+        FetchWeatherTask weatherTask = new FetchWeatherTask(); // grabs the weather data on create
         weatherTask.execute("94043");
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { // instantiated in place
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String forecast = mForecastAdapter.getItem(i);
+//                Toast toast = Toast.makeText(getActivity(),forecast,Toast.LENGTH_SHORT);
+//                toast.show();
+                Intent detailIntent = new Intent(getActivity(), DetailActivity.class)
+                        .putExtra(Intent.EXTRA_TEXT, forecast); // put extra sends extra data with the intent
+                startActivity(detailIntent);
+
+            }
+        });
+
+
+
+
 
         return rootView; // return the tree after it's been created
     }
