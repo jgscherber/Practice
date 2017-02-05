@@ -1,13 +1,17 @@
-package jacob.scherber;
+package jacob.scherber.wizardofyesno;
 
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.UIManager;
 
 public class WizardOfYesNo extends JFrame { // use JFrame as the superclass for programs that start with a window
 	
+	
+	private static final long serialVersionUID = 1L; // required for JFrame and many other components
 	private static final String[] ANSWER = {"Yes","No","If you must","If it pleases","Go now!", "You must!", "Never!"};
 	
 	public WizardOfYesNo() {
@@ -42,12 +46,28 @@ public class WizardOfYesNo extends JFrame { // use JFrame as the superclass for 
 		setVisible(true);
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE); // w/o main continues to run, HIDE_ON_CLOSE is defaul operation
-		//setSize(200, 100);
+		setSize(200, 100);
 	}
 	
 	public static void main(String[] args) {
+		try {
+			String className = UIManager.getCrossPlatformLookAndFeelClassName(); // apply "Java theme" that matches current OS
+			UIManager.setLookAndFeel(className);
+			
+//			String className = UIManager.getSystemLookAndFeelClassName(); // apply theme that matches current OS
+//			UIManager.setLookAndFeel(className);
+		}
+		catch(Exception e)	{}
+		// main doesn't run on the EventQueue; we need our JFrame to run on it to get events form it
+		// so we add it using invokeLater and a Runnable object
+		EventQueue.invokeLater(new Runnable() { // inplace class definition of Runnable
+			
+			@Override // attribute that subclasses need to override it
+			public void run() {
+				new WizardOfYesNo(); // instantiates JFrame object				
+			}
+		});
 		
-		new WizardOfYesNo(); // instantiates JFrame object
 
 	}
 
