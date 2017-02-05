@@ -11,10 +11,11 @@ import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+
+import jacob.scherber.mycomponents.TitleLabel;
 
 
 public class GuessMyColor extends JFrame {
@@ -59,21 +60,25 @@ public class GuessMyColor extends JFrame {
 	
 	private void initGUI() { // not static, called only when an object is created
 		
-		JLabel titleLabel = new JLabel();
-		Font titleFont = new Font(Font.SERIF, Font.BOLD, 32);
-		titleLabel.setFont(titleFont);
-		titleLabel.setHorizontalAlignment(JLabel.CENTER);
-		titleLabel.setText("Guess My Color");
-		titleLabel.setOpaque(true); // needed for background to show black (JLabel's transparent by default)
-		titleLabel.setBackground(Color.BLACK);
-		titleLabel.setForeground(Color.WHITE);
-		// w/o specifying the location with the 2nd parameter, labels will overlap
-		// each other at the CENTER location (only see the last one added)
+//		JLabel titleLabel = new JLabel();
+//		Font titleFont = new Font(Font.SERIF, Font.BOLD, 32);
+//		titleLabel.setFont(titleFont);
+//		titleLabel.setHorizontalAlignment(JLabel.CENTER);
+//		titleLabel.setText("Guess My Color");
+//		titleLabel.setOpaque(true); // needed for background to show black (JLabel's transparent by default)
+//		titleLabel.setBackground(Color.BLACK);
+//		titleLabel.setForeground(Color.WHITE);
+//		// w/o specifying the location with the 2nd parameter, labels will overlap
+//		// each other at the CENTER location (only see the last one added)
+//		
+//		// PAGE_START: Top
+//		// PAGE_END: Bottom
+//		// LINE_START: relate to orientation (left-to-right vs. right-to-left)
+//		// LINE_END: right
+
+		TitleLabel titleLabel = new TitleLabel("Guess My Color");
+		
 		add(titleLabel,BorderLayout.PAGE_START); 
-		// PAGE_START: Top
-		// PAGE_END: Bottom
-		// LINE_START: relate to orientation (left-to-right vs. right-to-left)
-		// LINE_END: right
 		
 		JPanel centerPanel = new JPanel();
 		centerPanel.setBackground(Color.WHITE);

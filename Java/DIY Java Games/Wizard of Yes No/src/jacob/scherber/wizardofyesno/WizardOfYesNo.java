@@ -1,33 +1,64 @@
 package jacob.scherber.wizardofyesno;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Label;
 import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.UIManager;
+
+import jacob.scherber.mycomponents.TitleLabel;
 
 public class WizardOfYesNo extends JFrame { // use JFrame as the superclass for programs that start with a window
 	
 	
 	private static final long serialVersionUID = 1L; // required for JFrame and many other components
-	private static final String[] ANSWER = {"Yes","No","If you must","If it pleases","Go now!", "You must!", "Never!"};
+	private static final String[] ANSWER = {"Yes","If you must","If it pleases","Go now!", "You must!", "Never!","No","Don't","You can't!"};
 	
 	public WizardOfYesNo() {
 		
+		String disclaimer = "This is only a suggestion. Use your own good judgment. The Wizard of Yes/ No is not responsible for the consequences of your decisions.";
 		
 		
+		TitleLabel titleLabel = new TitleLabel("Wizard of Yes/No");
+		add(titleLabel, BorderLayout.PAGE_START);
+		
+		//JLabel disclaimerLabel = new JLabel(disclaimer);
+		JTextArea disclaimerTextArea = new JTextArea(disclaimer);
+		disclaimerTextArea.setLineWrap(true);
+		disclaimerTextArea.setWrapStyleWord(true); // default will split words
+		disclaimerTextArea.setEditable(false);
+		//add(disclaimerTextArea, BorderLayout.PAGE_END);
 			
+		JScrollPane scrollPane = new JScrollPane(disclaimerTextArea);
+		scrollPane.setPreferredSize(new Dimension(300,60));
+		add(scrollPane, BorderLayout.PAGE_END);
+		
 		// -- label creation --
 		Random rand = new Random();
 		int numberOfAnswers = ANSWER.length;
 		int pick = rand.nextInt(numberOfAnswers);
+			
 		String answer = ANSWER[pick];
 		//JLabel label = new JLabel("Yes"); // text set on instantiation
 		JLabel label = new JLabel();
 		label.setText(answer); // set text after instantiation
-		add(label); // puts it in window w/o packing
+		label.setOpaque(true);
+		if(pick<5) {
+			label.setBackground(Color.GREEN);
+			}
+		else {
+			label.setBackground(Color.RED);
+		}
+		add(label,BorderLayout.CENTER); // puts it in window w/o packing
 		
 		
 		// -- changing fonts
@@ -46,7 +77,7 @@ public class WizardOfYesNo extends JFrame { // use JFrame as the superclass for 
 		setVisible(true);
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE); // w/o main continues to run, HIDE_ON_CLOSE is defaul operation
-		setSize(200, 100);
+		//setSize(200, 100);
 	}
 	
 	public static void main(String[] args) {
