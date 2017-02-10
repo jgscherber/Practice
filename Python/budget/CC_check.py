@@ -1,22 +1,28 @@
 from selenium import webdriver
 import datetime, time, selenium, unicodedata, smtplib, sys
 from dateutil.relativedelta import relativedelta
-
+from selenium.webdriver.common import action_chains, keys
 
 
 def web_scrape():
-    UN = 'jgscherber'
+    UN = '***'
     PW = '****'
-##    driverService = selenium.PhantomJSDriverService.CreateDefaultService()
-##    driverService.HideCommandPromptWindow = true
-    #driver = webdriver.PhantomJS(r'phantomjs.exe')
-    driver = webdriver.Firefox()
-    driver.get('https://online.citi.com/US/Welcome.c')
-    driver.implicitly_wait(30)
-    driver.find_element_by_id('username').send_keys(UN)
-    driver.find_element_by_id('pwd').send_keys(PW)
-    driver.find_element_by_id('find-submit').click()
-    time.sleep(3)
+
+    driver = webdriver.Chrome()
+    driver.get('https://online.citi.com')
+    time.sleep(2)
+    password = driver.find_element_by_id('password')
+    password.send_keys(PW)
+    password.click()
+    action = action_chains.ActionChains(driver)
+    action.send_keys(keys.Keys.SHIFT + keys.Keys.TAB)
+    action.send_keys(UN)
+    action.perform()
+
+    #driver.find_element_by_xpath("//form[@id='logInForm']/input[1]").send_keys(UN)
+    
+    driver.find_element_by_id('signInBtn').click()
+    time.sleep(15)
     # get all relevant elements, easier to grab
     trans_dates_el = driver.find_elements_by_class_name(
         "cA-ada-TransactionDateColumn")
@@ -37,8 +43,9 @@ def web_scrape():
         del trans_dates[i]
     # convert to floats and datetimes for summation later    
     trans_dates = [datetime.datetime.strptime(i, '%b. %d, %Y') for i in trans_dates]
-    trans_amounts = [float(i.lstrip('$')) for i in trans_amounts]
-    driver.quit()
+    trans_amounts = [i.lstrip('$') for i in trans_amounts]
+    trans_amounts = [float(i.replace(',','')) for i in trans_amounts]
+    driver.close()
     
     return trans_dates, trans_amounts
 
