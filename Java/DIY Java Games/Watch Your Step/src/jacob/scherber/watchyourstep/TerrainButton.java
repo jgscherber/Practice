@@ -26,7 +26,9 @@ public class TerrainButton extends JButton {
 		
 		
 		
+		
 	}
+	
 	
 	// getters
 	public int getRow() { 
@@ -73,8 +75,8 @@ public class TerrainButton extends JButton {
 	} //end reveal
 
 	public void reset() {
-		row=0;
-		col=0;
+		//row=0;
+		//col=0;
 		nextToHoles=0;
 		
 		revealed = false;
