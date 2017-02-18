@@ -13,6 +13,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
+
 import jacob.scherber.mycomponents.TitleLabel;
 
 public class WatchYourStep extends JFrame {
@@ -69,19 +71,36 @@ public class WatchYourStep extends JFrame {
 	private void clickedTerrain(int row,int col) {
 		TerrainButton button = terrain[row][col];
 		if(button.hasHole()) {
-			promptForNewGame();
+			String message = "Oops! You stepped in a hole! Play again?";
+			showHoles();
+			promptForNewGame(message);
 		}
 		else{
 			check(row, col);
 			checkNeighbors(row, col);
+			System.out.println(totalRevealed);
+			System.out.println(GRIDSIZE*GRIDSIZE - NUMBEROFHOLES);
+			if(totalRevealed == (GRIDSIZE*GRIDSIZE - NUMBEROFHOLES)) {
+				String message = "You found all the holes! Play again?"; 
+				showHoles();
+				promptForNewGame(message);
+			}
 		}
 		
 		
 	}
 	
-	private void promptForNewGame() {
-		String message = "Oops! You stepped in a hole! Play again?";
-		int done = JOptionPane.showConfirmDialog(this, message,"You lose!", JOptionPane.YES_NO_OPTION);
+	private void showHoles() {
+		for(TerrainButton[] top : terrain) {
+			for (TerrainButton button : top) {
+				if(button.hasHole()) button.reveal(true);				
+			}
+		}
+	}
+	
+	private void promptForNewGame(String message) {
+		
+		int done = JOptionPane.showConfirmDialog(this, message,"New Game?", JOptionPane.YES_NO_OPTION);
 		if(done == JOptionPane.YES_OPTION) newGame(); 
 		else System.exit(0);
 	}
@@ -94,6 +113,7 @@ public class WatchYourStep extends JFrame {
 			}
 		}
 		setHoles();
+		totalRevealed = 0;
 	}
 	
 	
@@ -113,7 +133,11 @@ public class WatchYourStep extends JFrame {
 		if(!validSpace(row, col)) return;
 		TerrainButton button = terrain[row][col];
 		if(button.isRevealed()) return; // needed to stop stackOverflow
-		if(!button.hasHole()) button.reveal(true);
+		if(!button.hasHole()) {
+			button.reveal(true);
+			totalRevealed++;
+		}
+		
 		if(!button.isNextToHoles()) checkNeighbors(row, col);
 		
 	}

@@ -63,15 +63,22 @@ public class TerrainButton extends JButton {
 	public void reveal(boolean reveal) {
 		revealed = reveal;
 		if (revealed) {
-			if(hole) setBackground(Color.BLACK);
-			else setBackground(Color.CYAN);
+			if(hole) {
+				setBackground(Color.BLACK);
+				setText("");
+			}
+			else {
+				setBackground(Color.CYAN);
+				if (isNextToHoles()) setText(Integer.toString(nextToHoles));
+			}
 		
-			if (isNextToHoles()) setText(Integer.toString(nextToHoles));
+			
 		}
 		else {
 			setBackground(null);
 			setText("");
 		}
+		setFocusPainted(false);
 	} //end reveal
 
 	public void reset() {
