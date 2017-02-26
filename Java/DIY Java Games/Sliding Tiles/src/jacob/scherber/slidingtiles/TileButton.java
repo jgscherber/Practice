@@ -5,6 +5,7 @@ import java.awt.Dimension;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.border.Border;
 
 public class TileButton extends JButton {
 
@@ -18,15 +19,6 @@ public class TileButton extends JButton {
 	// exist per tile instance
 	private int imageId = 0, row = 0, col = 0;
 	
-	public void setImage(ImageIcon imageIcon, int imageId) {
-		this.imageIcon = imageIcon;
-		this.imageId = imageId;
-		
-		// last spot has no image to allow sliding into it
-		if((maxTiles-1) == imageId) setIcon(null);
-		else setIcon(imageIcon);
-	}
-	
 	public TileButton(ImageIcon imageIcon, int imageId, int row, int col) {
 		setImage(imageIcon, imageId);
 		
@@ -34,17 +26,39 @@ public class TileButton extends JButton {
 		this.col = col;
 		
 		setBackground(Color.WHITE);
-		setBorder(null);
+		//setBorder(null); // removes the border lines
 		
 		Dimension size = new Dimension(tileSize,tileSize);
 		setPreferredSize(size);
 		setFocusPainted(false);
 	}
 	
+	// for the final win condition
+	public void showImage() {
+		
+		setIcon(imageIcon);		
+	}
+	
+	public void swap(TileButton otherTile) {
+		ImageIcon otherImageIcon = otherTile.getImage();
+		int otherImageId = otherTile.getImageId();
+		
+		// IDEs are awesome!
+		otherTile.setImage(imageIcon, imageId);
+		setImage(otherImageIcon, otherImageId);		
+		
+	}
 	
 	// getters
 	private ImageIcon getImage() {
 		return imageIcon;
+	}
+
+	// check if it's the null spot, to support sliding into it
+	// every button has an imageIcon, can't check that
+	// have to check if the the icon object has been applied
+	public boolean hasNoImage() {
+		return (getIcon() == null); 
 	}
 	
 	public int getRow() {
@@ -60,6 +74,16 @@ public class TileButton extends JButton {
 	}
 	
 	// setters
+	public void setImage(ImageIcon imageIcon, int imageId) {
+		this.imageIcon = imageIcon;
+		this.imageId = imageId;
+		
+		// last spot has no image to allow sliding into it
+		if((maxTiles-1) == imageId) setIcon(null);
+		else setIcon(imageIcon);
+
+	}
+	
 	public static void setTileSizeAndMaxTiles(int size, int max) {
 		tileSize = size;
 		maxTiles = max;
