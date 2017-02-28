@@ -1,12 +1,8 @@
 package jacob.scherber.watchyourstep;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.EventQueue;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.LayoutManager;
+import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,7 +20,7 @@ public class WatchYourStep extends JFrame {
 	private TerrainButton[][] terrain = new TerrainButton[GRIDSIZE][GRIDSIZE];
 	public WatchYourStep() {
 		initGUI();
-		
+		setHoles();
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -35,7 +31,7 @@ public class WatchYourStep extends JFrame {
 		
 	}
 	
-	public void initGUI() {
+	private void initGUI() {
 		
 		TitleLabel titleLabel = new TitleLabel("Watch Your Step");
 		add(titleLabel, BorderLayout.PAGE_START);
@@ -52,17 +48,36 @@ public class WatchYourStep extends JFrame {
 		
 	}// end initGUI
 	
+	private void setHoles(){
+		Random rand = new Random();
+		for( int i = 0; i<NUMBEROFHOLES;i++) {
+			int pickRow = rand.nextInt(GRIDSIZE);
+			int pickCol = rand.nextInt(GRIDSIZE);
+			while(terrain[pickRow][pickCol].hasHole()) {
+				pickRow = rand.nextInt(GRIDSIZE);
+				pickCol = rand.nextInt(GRIDSIZE);
+			}
+			terrain[pickRow][pickCol].setHole(true);
+			addToNeighborsHoleCount(pickRow, pickCol);
+			//terrain[pickRow][pickCol].reveal(true);
+			
+		} // next i
+	} // end setHoles
+	
+	private void addToNeighborsHoleCount(int pickRow, int pickCol) {
+		
+	} // end addToNeighborsHoleCount
 	
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				new WatchYourStep();
-				
-			}
-		});
-		
+//		EventQueue.invokeLater(new Runnable() {
+//			
+//			@Override
+//			public void run() {
+//				new WatchYourStep();
+//				
+//			}
+//		});
+		new WatchYourStep();
 		try{
 			String classname = UIManager.getCrossPlatformLookAndFeelClassName();
 			UIManager.setLookAndFeel(classname);
