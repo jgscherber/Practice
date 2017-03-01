@@ -1,10 +1,12 @@
 package jacob.scherber.watchyourstep;
 
 import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.util.Random;
 
 import javax.swing.JDialog;
@@ -28,7 +30,7 @@ public class WatchYourStep extends JFrame {
 	public WatchYourStep() {
 		initGUI();
 		setHoles();
-		
+
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -39,7 +41,7 @@ public class WatchYourStep extends JFrame {
 		
 	}
 	
-	public void initGUI() {
+	private void initGUI() {
 		
 		TitleLabel titleLabel = new TitleLabel("Watch Your Step");
 		add(titleLabel, BorderLayout.PAGE_START);
@@ -67,7 +69,7 @@ public class WatchYourStep extends JFrame {
 		}
 		
 	}// end initGUI
-	
+    
 	private void clickedTerrain(int row,int col) {
 		TerrainButton button = terrain[row][col];
 		if(button.hasHole()) {
@@ -178,10 +180,9 @@ public class WatchYourStep extends JFrame {
 			@Override
 			public void run() {
 				new WatchYourStep();
-				
-			}
-		});
-		
+                }
+        }                
+
 		try{
 			String classname = UIManager.getCrossPlatformLookAndFeelClassName();
 			UIManager.setLookAndFeel(classname);
