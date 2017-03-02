@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.awt.Scrollbar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -15,7 +16,11 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -38,10 +43,11 @@ public class SlidingTiles extends JFrame {
 	private TileButton[][] tile = new TileButton[gridSize][gridSize];
 	JPanel centerPanel = new JPanel();
 	
-	public SlidingTiles(){
-		TileButton.setTileSizeAndMaxTiles(tileSize, (int)Math.pow(gridSize, 2));
+	public SlidingTiles() {
 		
+		TileButton.setTileSizeAndMaxTiles(tileSize, (int)Math.pow(gridSize, 2));
 		try {
+		
 			// top is the root folder
 			image = ImageIO.read(new File("src/"+FILENAME));
 		
@@ -60,6 +66,28 @@ public class SlidingTiles extends JFrame {
 	}
 	
 	public void initGUI() {
+		
+		// menu bar
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu fileMenu = new JMenu("File"); // needs String arg
+		menuBar.add(fileMenu);
+		
+		JMenuItem openMenuItem = new JMenuItem("Open");
+		fileMenu.add(openMenuItem);
+		
+		openMenuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				open();
+				
+			}
+		});
+		
+		
+		// title
 		TitleLabel title = new TitleLabel("Sliding Tiles");
 		add(title,BorderLayout.PAGE_START);
 		
@@ -83,6 +111,23 @@ public class SlidingTiles extends JFrame {
 		});
 		buttonPanel.add(scrambleButton);
 		
+	}
+	
+	private void open() {
+		JFileChooser chooser = new JFileChooser(); // can set default path here as String
+		int option = chooser.showOpenDialog(this); // this is the JFrame
+		if(option==JFileChooser.APPROVE_OPTION) {
+			File file = chooser.getSelectedFile();
+			try {
+				image = ImageIO.read(file);
+				divideImage();
+			}
+			catch(Exception e) {
+				String message = "Could not open file.";
+				JOptionPane.showMessageDialog(this, message);
+			}
+			
+		}
 	}
 	
 	private void newGame() {
@@ -179,7 +224,7 @@ public class SlidingTiles extends JFrame {
 		for(int i = 0; inOrder && i<gridSize; i++) {
 			for(int j = 0; inOrder && j<gridSize; j++){
 				int currentID = tile[i][j].getImageId();
-				System.out.println(currentID + " " + id);
+				//System.out.println(currentID + " " + id);
 				inOrder = currentID == id;
 				id++;
 				
@@ -214,21 +259,25 @@ public class SlidingTiles extends JFrame {
 	
 	public static void main(String[] args) {
 		
-		EventQueue.invokeLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				new SlidingTiles();
-				
-			}
-		});
-		
-		
+//		 this has to be before eventqueue call????
 		try {
 			String className = UIManager.getCrossPlatformLookAndFeelClassName();
 			UIManager.setLookAndFeel(className);
 		}
 		catch(Exception e){}
+		
+		
+		EventQueue.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				new SlidingTiles();
+			}
+		});
+		
+		
+		
 	}
 
 }

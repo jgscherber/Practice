@@ -101,10 +101,13 @@ public class Cell extends JPanel {
 		
 		// draws walls
 		g.setColor(Color.BLACK);
-		if(wall[TOP]) g.drawLine(0, 0, SIZE, 0);
-//		if(wall[RIGHT]) g.drawLine(SIZE, 0, SIZE, SIZE);
-//		if(wall[BOTTOM]) g.drawLine(0, SIZE, SIZE, SIZE);
-		if(wall[LEFT]) g.drawLine(0, 0, 0, SIZE);
+		// anti maze only draws spaces where there were opens
+		if(!wall[TOP]) g.drawLine(0, 0, SIZE, 0);
+		if(!wall[LEFT]) g.drawLine(0, 0, 0, SIZE);
+//		// regular maze
+//		if(wall[TOP]) g.drawLine(0, 0, SIZE, 0);
+//		if(wall[LEFT]) g.drawLine(0, 0, 0, SIZE);
+		
 		
 		// draws path (top, right, bottom, left)
 		int MID = SIZE/2; 		
