@@ -4,6 +4,7 @@ package jacob.scherber.slidingtiles;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Scrollbar;
 import java.awt.event.ActionEvent;
@@ -33,12 +34,18 @@ public class SlidingTiles extends JFrame {
 	
 	// iamge variables
 	private static final String FILENAME = "slidingTilesImage.jpg";
-
+	private static final int 
+						UP = 0, 
+						DOWN=1, 
+						LEFT = 2, 
+						RIGHT=3,
+						IMAGESIZE=200;
+	
 	private int gridSize = 3;
 	private int tileSize = 200/gridSize;
 	private BufferedImage image = null;
 	
-	private static final int UP = 0, DOWN=1, LEFT = 2, RIGHT=3;
+	
 	
 	private TileButton[][] tile = new TileButton[gridSize][gridSize];
 	JPanel centerPanel = new JPanel();
@@ -115,11 +122,24 @@ public class SlidingTiles extends JFrame {
 	
 	private void open() {
 		JFileChooser chooser = new JFileChooser(); // can set default path here as String
+		
+		ImageFileFilter fileFilter = new ImageFileFilter();
+		chooser.setFileFilter(fileFilter);
+		
 		int option = chooser.showOpenDialog(this); // this is the JFrame
+		
 		if(option==JFileChooser.APPROVE_OPTION) {
 			File file = chooser.getSelectedFile();
 			try {
-				image = ImageIO.read(file);
+				//image = ImageIO.read(file);
+				BufferedImage newImage = ImageIO.read(file); // should only exist w/in this block
+				
+				int width = newImage.getWidth();
+				int height = newImage.getHeight();
+				
+				// Returns: a Graphics2D, which can be used to draw into this image.
+				Graphics g = image.getGraphics();
+				// 3/1 10:30pm
 				divideImage();
 			}
 			catch(Exception e) {
