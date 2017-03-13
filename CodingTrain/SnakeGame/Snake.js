@@ -7,6 +7,21 @@ function Snake() { // class constructor
   this.total = 0;
   this.tail = []; // will store history
   
+  this.death = function() {
+   for (var i = 0; i < this.tail.length; i++) {
+     var pos = this.tail[i]; // vector object
+     var d = dist(this.x, this.y, pos.x, pos.y);
+     if(d<1) {
+       // loss result is a game reset
+       this.total = 0;
+       this.tail = [];
+     }
+   }
+  }
+  
+  
+  
+  
   this.update = function() {
     if(this.total === this.tail.length) {
       for(var i = 0; i < this.tail.length-1; i++) {

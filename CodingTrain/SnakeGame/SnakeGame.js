@@ -26,6 +26,7 @@ function pickLocation() {
 
 function draw() {
   background(51);
+  s.death();
   s.update();
   s.show();
   
@@ -40,7 +41,7 @@ function draw() {
 }
 
 function keyPressed() { // built-in key listener
-  if(keyCode === UP_ARROW) {
+  if(keyCode === UP_ARROW) { // could add conditionals to prevent backtracking after a length of 1
     s.dir(0,-1) // x, y (zero is the top of the screen
   }
   else if(keyCode === DOWN_ARROW) {
