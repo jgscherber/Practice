@@ -14,7 +14,7 @@ public class ImageFileFilter extends FileFilter {
 		return ((fileName.endsWith(".jpg")
 				|| fileName.endsWith(".png")
 				|| fileName.endsWith(".gif"))
-				);
+				|| arg0.isDirectory());
 		// && !(arg0.isDirectory()) // hides them from view!
 	}
 

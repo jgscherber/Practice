@@ -80,9 +80,17 @@ public class SlidingTiles extends JFrame {
 		
 		JMenu fileMenu = new JMenu("File"); // needs String arg
 		menuBar.add(fileMenu);
+		JMenu sizeMenu = new JMenu("Size");
+		menuBar.add(sizeMenu);
 		
 		JMenuItem openMenuItem = new JMenuItem("Open");
 		fileMenu.add(openMenuItem);
+		JMenuItem size3MenuItem = new JMenuItem("3 x 3");
+		sizeMenu.add(size3MenuItem);
+		JMenuItem size4MenuItem = new JMenuItem("4 x 4");
+		sizeMenu.add(size4MenuItem);
+		JMenuItem size5MenuItem = new JMenuItem("5 x 5");
+		sizeMenu.add(size5MenuItem);
 		
 		openMenuItem.addActionListener(new ActionListener() {
 			
@@ -93,6 +101,32 @@ public class SlidingTiles extends JFrame {
 			}
 		});
 		
+		size3MenuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				setGridSize(3);
+				
+			}
+		});
+		
+		size4MenuItem.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						setGridSize(4);
+						
+					}
+				});
+		
+		size5MenuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				setGridSize(5);
+				
+			}
+		});
 		
 		// title
 		TitleLabel title = new TitleLabel("Sliding Tiles");
@@ -120,6 +154,16 @@ public class SlidingTiles extends JFrame {
 		
 	}
 	
+	private void setGridSize(int size) {
+		
+		gridSize = size;
+		tileSize = IMAGESIZE / size;
+		TileButton.setTileSizeAndMaxTiles(tileSize, gridSize);
+		tile = new TileButton[gridSize][gridSize];
+		divideImage();
+		pack(); // repack the image to avoid uneven divisions of the IMAGESIZE leaving extra space
+	}
+	
 	private void open() {
 		JFileChooser chooser = new JFileChooser(); // can set default path here as String
 		
@@ -136,10 +180,15 @@ public class SlidingTiles extends JFrame {
 				
 				int width = newImage.getWidth();
 				int height = newImage.getHeight();
+				width = Math.max(width, height);
+				height = Math.max(width, height);
 				
 				// Returns: a Graphics2D, which can be used to draw into this image.
 				Graphics g = image.getGraphics();
-				// 3/1 10:30pm
+				// from, output size, input size, "observer"
+				g.drawImage(newImage,0,0,IMAGESIZE, IMAGESIZE, 0,0,width,height,this);
+				g.dispose();
+				
 				divideImage();
 			}
 			catch(Exception e) {
@@ -281,7 +330,8 @@ public class SlidingTiles extends JFrame {
 		
 //		 this has to be before eventqueue call????
 		try {
-			String className = UIManager.getCrossPlatformLookAndFeelClassName();
+//			String className = UIManager.getCrossPlatformLookAndFeelClassName();
+			String className = UIManager.getSystemLookAndFeelClassName();
 			UIManager.setLookAndFeel(className);
 		}
 		catch(Exception e){}
