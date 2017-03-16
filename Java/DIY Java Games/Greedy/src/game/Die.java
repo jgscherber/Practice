@@ -2,6 +2,8 @@ package game;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Random;
 import java.awt.Color;
 
@@ -28,6 +30,25 @@ public class Die extends JPanel {
 	
 	Die() {
 		roll();
+		addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				click();
+			}
+			
+		});
+	}
+	
+	private void click() {
+		if(state == STATE_AVAILABLE) {
+			state = STATE_SELECTED;
+			repaint();
+			return;
+		}
+		if(state == STATE_SELECTED) {
+			state = STATE_AVAILABLE;
+			repaint();
+			return;
+		}
 	}
 	
 	public int roll() {
@@ -96,4 +117,31 @@ public class Die extends JPanel {
 	}
 	
 	
+	// -- Getters
+	
+	public boolean isAvailable() {
+		return(state == STATE_AVAILABLE);
+	}
+	
+	public boolean isSelected() {
+		return(state == STATE_SELECTED);
+	}
+	
+	public boolean isHeld() {
+		return(state == STATE_HELD);
+	}
+	
+	public int getValue() {
+		return value;
+	}
+	
+	public void hold() {
+		state = STATE_HELD;
+		repaint();
+	}
+	
+	public void makeAvailable() {
+		state = STATE_AVAILABLE;
+		repaint();
+	}
 }
