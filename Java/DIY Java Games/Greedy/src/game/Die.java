@@ -38,6 +38,17 @@ public class Die extends JPanel {
 		});
 	}
 	
+	Die(int value) { // for testing purposes
+		this.value = value;
+		
+		addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				click();
+			}
+			
+		});
+	}
+	
 	private void click() {
 		if(state == STATE_AVAILABLE) {
 			state = STATE_SELECTED;
