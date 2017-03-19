@@ -9,6 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -28,12 +35,14 @@ public class Greedy extends JFrame {
 			points = 0,
 			newPoints = 0,
 			score = 0,
-			round = 1;
+			round = 1,
+			highScore = 0;
 	
 	private JLabel 
 			pointsLabel = new JLabel("0"),
 			scoreLabel = new JLabel("0"),
-			roundLabel = new JLabel("1");
+			roundLabel = new JLabel("1"),
+			highScoreLabel = new JLabel("");
 	
 	private Font 
 			smallFont = new Font("Dialog", Font.PLAIN, 12),
@@ -44,6 +53,10 @@ public class Greedy extends JFrame {
 				endRoundButton = new JButton("End Round");
 	
 	private Die[] dice = new Die[6];
+	
+	private static final String 
+							HIGHSCORETEXT = "The previous high score was ",
+							FILENAME = "GreedyHighScore.txt";
 
 	Greedy() {
 		setResizable(false);
@@ -153,32 +166,48 @@ public class Greedy extends JFrame {
 				endRound();				
 			}
 		});
+		
+		// high score
+		getPreviousHighScore();
+		highScoreLabel.setText(HIGHSCORETEXT + highScore);
+		highScoreLabel.setFont(smallFont);
+		mainPanel.add(highScoreLabel);
+		
 	} // end initGUI()
 	
 	private void endRound() {
 		if(isValidSelection()) {
-			score += (points + newPoints);
-			points = 0;
-			newPoints = 0;
-			pointsLabel.setText("0");
-			scoreLabel.setText(""+score);
-			if(round != 5) {
-				round++;
-				roundLabel.setText(""+round);
-				rollAllDice();				
-			} else {
-				String message = "Do you want to play again?";
-				int option = JOptionPane.showConfirmDialog(this,message,"Play again?"
-						,JOptionPane.YES_NO_OPTION);
-				if(option == JOptionPane.YES_OPTION) {
-					score = 0;
-					round = 1;
-					scoreLabel.setText("0");
-					roundLabel.setText("1");
-					rollAllDice();
-				} else {System.exit(0);}
+			score += (points + newPoints);			
+			scoreLabel.setText(""+score);			
+		} 
+		points = 0;
+		newPoints = 0;
+		pointsLabel.setText("0");
+	
+		if(round != 5) {
+			round++;
+			roundLabel.setText(""+round);
+			rollAllDice();				
+		} else {
+			String message = "Do you want to play again?";
+			
+			if(score > highScore) {
+				message = "Congratulations, you set a new high score! \n" + message;
+				highScore = score;
+				highScoreLabel.setText(HIGHSCORETEXT + highScore);
+				saveScore();
+			}				
+			
+			int option = JOptionPane.showConfirmDialog(this,message,"Play again?"
+					,JOptionPane.YES_NO_OPTION);
+			if(option == JOptionPane.YES_OPTION) {
+				score = 0;
+				round = 1;
+				scoreLabel.setText("0");
+				roundLabel.setText("1");
+				rollAllDice();
+			} else {System.exit(0);}
 
-			}
 		}
 	}
 	
@@ -265,6 +294,33 @@ public class Greedy extends JFrame {
 		}		
 		
 		return true;
+	}
+	
+	private void saveScore() {
+		try{		
+			BufferedWriter out = new BufferedWriter(new FileWriter(new File(FILENAME)));
+			out.write(""+highScore);
+			out.close();
+		} catch(IOException e) {
+			JOptionPane.showMessageDialog(this, "High score couldn't be saved.");
+		}
+	}
+	
+	private void getPreviousHighScore() {
+		try {
+			BufferedReader in = new BufferedReader(new FileReader(new File(FILENAME))); // holy nesting!
+			String s = in.readLine();
+			highScore = Integer.parseInt(s);
+			in.close();
+		} catch(FileNotFoundException e) {
+			JOptionPane.showMessageDialog(this, "File not found.");
+		} catch(IOException e) {
+			JOptionPane.showMessageDialog(this, "File could not be opened.");
+		} catch(NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "File contains invalid data.");
+		}
+		
+		
 	}
 	
 	public static void main(String[] args) {
