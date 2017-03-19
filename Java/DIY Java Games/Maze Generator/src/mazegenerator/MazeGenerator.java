@@ -27,13 +27,18 @@ public class MazeGenerator extends JFrame {
 	
 	// really like this formatting...
 	private int 
-			rows=30,
+			rows=10,
 			cols=rows, 
 			row=0, 
 			col=0, 
 			endRow = rows-1, 
 			endCol = cols-1;
 	
+	public static final int
+			TYPE_MAZE = 0,
+			TYPE_ANTIMAZE = 1;
+	
+	private int type = TYPE_MAZE;
 	
 	private Cell[][] cell; 
 	
@@ -86,6 +91,19 @@ public class MazeGenerator extends JFrame {
 		add(buttonPanel, BorderLayout.PAGE_END);
 		JButton newMazeButton = new JButton("New Maze");
 		buttonPanel.add(newMazeButton,BorderLayout.CENTER);
+		
+		JButton optionsButton = new JButton("Options");
+		buttonPanel.add(optionsButton);
+		optionsButton.setFocusable(false);
+		optionsButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				changeOptions();
+				
+			}
+		});
+		
 		newMazeButton.setFocusable(false); // allow the listener to hold focus
 		newMazeButton.addActionListener(new ActionListener() {
 			
@@ -114,6 +132,14 @@ public class MazeGenerator extends JFrame {
 		
 		
 	} // end initGUI
+	
+	private void changeOptions() {
+		OptionsDialog dialog = new OptionsDialog(rows, cols, type);
+		dialog.setResizable(false);
+		dialog.pack();
+		dialog.setLocationRelativeTo(this);
+		dialog.setVisible(true);
+	}
 	
 	private void moveBall(int direction) {
 		switch(direction) {
@@ -176,6 +202,12 @@ public class MazeGenerator extends JFrame {
 	
 	private void newMaze(){
 		
+		if(type == TYPE_MAZE) {
+			titleLabel.setText("Maze");
+		} else {
+			titleLabel.setText("Anti-Maze");
+		}
+		
 		mazePanel.removeAll();
 		mazePanel.setLayout(new GridLayout(rows, cols));
 		cell = new Cell[rows][cols];
@@ -184,7 +216,7 @@ public class MazeGenerator extends JFrame {
 		
 		for(int r = 0; r < rows; r++) {
 			for(int c = 0; c < cols; c++) {
-				cell[r][c] = new Cell(r,c);				
+				cell[r][c] = new Cell(r,c,type);				
 				mazePanel.add(cell[r][c]);
 			}
 		}

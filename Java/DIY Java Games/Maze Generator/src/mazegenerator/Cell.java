@@ -19,7 +19,8 @@ public class Cell extends JPanel {
 	
 	private int 
 			row = -1, 
-			col=-1;
+			col=-1,
+			type = MazeGenerator.TYPE_ANTIMAZE;
 	
 	private boolean[] 
 			wall = {true, true, true, true}, // top, right, bottom, left
@@ -29,9 +30,10 @@ public class Cell extends JPanel {
 				current = false,
 				end = false;
 	
-	public Cell(int row, int col) {
+	public Cell(int row, int col,int type) {
 		this.row = row;
 		this.col = col;
+		this.type = type;
 		
 	}
 	
@@ -101,12 +103,15 @@ public class Cell extends JPanel {
 		
 		// draws walls
 		g.setColor(Color.BLACK);
-		// anti maze only draws spaces where there were opens
-		if(!wall[TOP]) g.drawLine(0, 0, SIZE, 0);
-		if(!wall[LEFT]) g.drawLine(0, 0, 0, SIZE);
-//		// regular maze
-//		if(wall[TOP]) g.drawLine(0, 0, SIZE, 0);
-//		if(wall[LEFT]) g.drawLine(0, 0, 0, SIZE);
+		if(type == MazeGenerator.TYPE_ANTIMAZE) {
+			// anti maze only draws spaces where there were opens
+			if(!wall[TOP]) g.drawLine(0, 0, SIZE, 0);
+			if(!wall[LEFT]) g.drawLine(0, 0, 0, SIZE);
+		} else {
+			// regular maze
+			if(wall[TOP]) g.drawLine(0, 0, SIZE, 0);
+			if(wall[LEFT]) g.drawLine(0, 0, 0, SIZE);
+		}
 		
 		
 		// draws path (top, right, bottom, left)
