@@ -135,10 +135,19 @@ public class MazeGenerator extends JFrame {
 	
 	private void changeOptions() {
 		OptionsDialog dialog = new OptionsDialog(rows, cols, type);
+		// setModal() needs to be called before pack??
+		dialog.setModal(true); // stops main program from running while dialog is open
 		dialog.setResizable(false);
 		dialog.pack();
 		dialog.setLocationRelativeTo(this);
-		dialog.setVisible(true);
+		dialog.setVisible(true);	
+		if(!dialog.isCanceled()) {
+			rows = dialog.getRows();
+			cols = dialog.getColumns();
+			type = dialog.getMazeType();
+			newMaze();
+			pack();
+		}
 	}
 	
 	private void moveBall(int direction) {
@@ -197,6 +206,7 @@ public class MazeGenerator extends JFrame {
 		if(row==endRow && col==endCol) {
 			String message = "You won!";
 			JOptionPane.showMessageDialog(this, message);
+			newMaze();
 		}
 	}
 	
