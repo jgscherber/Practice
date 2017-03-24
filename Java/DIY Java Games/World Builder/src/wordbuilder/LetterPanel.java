@@ -1,7 +1,9 @@
-package worldbuilder;
+package wordbuilder;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -30,6 +32,8 @@ public class LetterPanel extends JPanel {
 			bigFont = new Font(Font.DIALOG,Font.BOLD, 30),
 			smallFont = new Font(Font.DIALOG,Font.BOLD, 12);
 	
+	private FontMetrics bigFM, smallFM;
+	
 	
 	public LetterPanel() {
 		this("",-1); // calls more general constructor
@@ -43,6 +47,10 @@ public class LetterPanel extends JPanel {
 	}
 	
 	private void initPanel() {
+		
+		bigFM = getFontMetrics(bigFont);
+		smallFM = getFontMetrics(smallFont);
+		
 		// get image if needed
 		if(image == null) {
 			try{
@@ -61,6 +69,12 @@ public class LetterPanel extends JPanel {
 	} // end initPanel()
 	
 	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(size, size); 
+	}
+	
+	
+	@Override
 	public void paintComponent(Graphics g) {
 		if(letter.length() == 0) {
 			g.setColor(BROWN);
@@ -73,7 +87,19 @@ public class LetterPanel extends JPanel {
 				g.drawImage(image, 0, 0, this);
 			}
 			g.setColor(Color.BLACK);
-			g.drawRect(0, 0, size-1, size-1);
+			g.drawRect(0, 0, size-1, size-1); // outline
+			g.setFont(bigFont);
+			
+			int letterWidth = bigFM.stringWidth(letter);
+			int x = (size-letterWidth) / 2;
+			int y = size * 3 / 4;
+			g.drawString(letter, x, y);
+			g.setFont(smallFont);
+			
+			letterWidth = smallFM.stringWidth(""+points);
+			x = size - letterWidth - 2;
+			y = size * 9 / 10;
+			g.drawString(""+points, x, y);
 		}
 	}
 
