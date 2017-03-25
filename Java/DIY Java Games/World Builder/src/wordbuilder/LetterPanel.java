@@ -24,7 +24,8 @@ public class LetterPanel extends JPanel {
 	
 	private int 
 			points = -1,
-			size = 40;
+			size = 40,
+			column = -1;
 	
 	private BufferedImage image = null;
 	
@@ -102,5 +103,25 @@ public class LetterPanel extends JPanel {
 			g.drawString(""+points, x, y);
 		}
 	}
-
+	
+	public void copy(LetterPanel letterPanel2) {
+		letter = letterPanel2.getLetter();
+		points = letterPanel2.getPoints();
+		column = letterPanel2.getColumn();
+		repaint();
+	}
+	
+	public String getLetter() {return letter;}
+	public int getPoints() {return points;}
+	public int getColumn() {return column;}
+	public int getPanelSize() {return size;}
+	public boolean isEmpty() {return (points == -1);}
+	
+	public void setColumn(int column) {this.column = column;}
+	public void setEmpty() {
+		letter = "";
+		points = -1;
+		repaint();
+	}
+	
 } // end class
