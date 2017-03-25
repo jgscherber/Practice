@@ -7,6 +7,9 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -133,7 +136,15 @@ public class WordBuilder extends JFrame {
 		
 		// first row of letters needs to be actionable
 		for(int col = 0; col < COLS; col++) {
-			
+			board[0][col].addMouseListener(new MouseAdapter() {
+				
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					LetterPanel letterPanel = (LetterPanel)e.getComponent();
+					click(letterPanel);
+				}
+				
+			});;
 		}
 		
 		
@@ -154,6 +165,11 @@ public class WordBuilder extends JFrame {
 		// listeners
 		
 		pack();
+	}
+	
+	private void click(LetterPanel letterPanel) {
+		int wordLength = word.length();
+		if(letterPanel.getLetter() != "" )
 	}
 	
 	public static void main(String[] args) {
