@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -79,6 +81,7 @@ public class WordBuilder extends JFrame {
 		// setup
 		TitleLabel title = new TitleLabel("Word Builder");
 		add(title, BorderLayout.PAGE_START);
+		setTitle("Word Builder");
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
@@ -140,7 +143,7 @@ public class WordBuilder extends JFrame {
 				
 				@Override
 				public void mouseReleased(MouseEvent e) {
-					LetterPanel letterPanel = (LetterPanel)e.getComponent();
+					LetterPanel letterPanel = (LetterPanel)e.getSource();
 					click(letterPanel);
 				}
 				
@@ -163,13 +166,98 @@ public class WordBuilder extends JFrame {
 		buttonPanel.add(endButton);
 		
 		// listeners
+		acceptButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				accept();
+				
+			}
+		});	
+		
+		undoButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				undo();
+				
+			}
+		});
 		
 		pack();
+		
+	} // end initGUI()
+	
+	private void undo() {
+		int last = word.length()-1;
+		word = word.substring(0, last); // end is exclusive
+		LetterPanel lastPlayedPanel = played[last];
+		points -= lastPlayedPanel.getPoints();
+		
+		int col = lastPlayedPanel.getColumn();
+		for(int row = ROWS-1; row > 0; row--) {
+			board[row][col].copy(board[row-1][col]);
+		}
+		board[0][col].copy(lastPlayedPanel);
+		
+		lastPlayedPanel.setEmpty();
+		updateButtonsAndPoints();
 	}
+	
+	private void accept() {
+		score += (word.length() * points);
+		scoreLabel.setText("" + score);
+		for(int i = 0; i < word.length(); i++) {
+			played[i].setEmpty();
+		}
+		points = 0;
+		word = "";
+		updateButtonsAndPoints();
+	}
+	
 	
 	private void click(LetterPanel letterPanel) {
 		int wordLength = word.length();
-		if(letterPanel.getLetter() != "" )
+		if(!letterPanel.isEmpty() && wordLength < MAX) {
+			// put the tile on the playing board
+			played[wordLength].copy(letterPanel);
+			word += letterPanel.getLetter();
+			points += letterPanel.getPoints();
+			
+			// remove the tile from the board
+			int col = letterPanel.getColumn();
+			for(int row = 0; row < ROWS-1; row++) {
+				board[row][col].copy(board[row+1][col]);
+			}
+			board[ROWS-1][col].setEmpty();
+			
+			updateButtonsAndPoints();
+		}
+	} // end click()
+	
+	private void updateButtonsAndPoints() {
+		int wordLen = word.length();
+		if(wordLen < 1) {
+			acceptButton.setEnabled(false);
+			undoButton.setEnabled(false);
+			clearBuuton.setEnabled(false);
+			pointsLabel.setText("0");
+		} else if(wordLen < 3 && wordLen > 0) {
+			acceptButton.setEnabled(false);
+			undoButton.setEnabled(true);
+			clearBuuton.setEnabled(true);
+			pointsLabel.setText("0");
+		} else {
+			if(dictionary.isAWord(word)) {
+				acceptButton.setEnabled(true);
+			} else {
+				acceptButton.setEnabled(false);
+			}
+			undoButton.setEnabled(true);
+			clearBuuton.setEnabled(true);
+			int newPoints = wordLen*points;
+			pointsLabel.setText(""+newPoints);
+		}
 	}
 	
 	public static void main(String[] args) {
