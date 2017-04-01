@@ -47,6 +47,18 @@ public class LetterPanel extends JPanel {
 
 	}
 	
+	public void resize(int size) {
+		
+		this.size = size;
+		bigFont = new Font(Font.DIALOG,Font.BOLD, size*3/4);
+		smallFont = new Font(Font.DIALOG,Font.BOLD, size*3/10);
+		bigFM = getFontMetrics(bigFont);
+		smallFM = getFontMetrics(smallFont);
+		
+		repaint();
+		revalidate();
+	}
+	
 	private void initPanel() {
 		
 		bigFM = getFontMetrics(bigFont);
