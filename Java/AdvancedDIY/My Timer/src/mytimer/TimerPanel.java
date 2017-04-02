@@ -5,7 +5,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.io.IOException;
+import java.net.URL;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -15,7 +22,10 @@ public class TimerPanel extends JPanel implements Runnable {
 
 	private int width = 150;
 	private int height = 24;
+	
 	private String timeString = "00:00:00";
+	private String FILENAME = "/alarm.wav";
+	
 	private long time = 10;
 	
 	private Thread timerThread;
@@ -93,6 +103,20 @@ public class TimerPanel extends JPanel implements Runnable {
 	
 	
 	protected void timesUp() { // why not private?
+		try{
+			URL url = getClass().getResource(FILENAME);
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.start();			
+		} catch(IOException e) {	
+			String message = "File cannot be opened";
+			JOptionPane.showMessageDialog(this, message);
+		} catch (UnsupportedAudioFileException e) {
+			
+		} catch (LineUnavailableException e) {
+			
+		}
 		String message = "Time's up!";
 		JOptionPane.showMessageDialog(this, message);		
 	}	
