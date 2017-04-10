@@ -1,8 +1,14 @@
 package jacob.scherber.mycomponents;
 
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -32,6 +38,40 @@ public class FileIO {
 		}
 		
 		return clip;
+	}
+	
+	public static BufferedImage readImageFile(Object requestor, String fileName) {
+		BufferedImage image = null;
+		try {
+			// getClass() to get runtime class of object
+			InputStream input = requestor.getClass().getResourceAsStream(fileName);
+			image = ImageIO.read(input);
+		} catch(IOException e) {
+			String message = fileName + " could not be opened.";
+			JOptionPane.showMessageDialog(null,message);
+		}
+		return image;
+	}
+	
+	public static ArrayList<String> readTextFile(Object requestor, String fileName) {
+		ArrayList<String> lines = new ArrayList<>();
+		try{
+			InputStream input = requestor.getClass().getResourceAsStream(fileName);
+			BufferedReader in = new BufferedReader(new InputStreamReader(input));
+			String line = in.readLine();
+			while(line!=null) {
+				lines.add(line);
+				line = in.readLine();
+			}
+			in.close();
+		} catch (NullPointerException e) {
+			String message = fileName + " could not be found.";
+			JOptionPane.showMessageDialog(null,message);
+		} catch (IOException e) {
+			String message = fileName + " could not be opened.";
+			JOptionPane.showMessageDialog(null,message);
+		}
+		return lines;
 	}
 	
 }
