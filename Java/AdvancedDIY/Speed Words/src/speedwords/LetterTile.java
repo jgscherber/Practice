@@ -75,4 +75,5 @@ public class LetterTile extends JPanel {
     public int getPoints() {
         return points;
     }
+    
 }
