@@ -45,7 +45,12 @@ public class FileIO {
 		try {
 			// getClass() to get runtime class of object
 			InputStream input = requestor.getClass().getResourceAsStream(fileName);
-			image = ImageIO.read(input);
+			if(input == null) {
+				String message = "File not found.";
+				JOptionPane.showMessageDialog(null, message);
+			} else {
+				image = ImageIO.read(input);
+			}
 		} catch(IOException e) {
 			String message = fileName + " could not be opened.";
 			JOptionPane.showMessageDialog(null,message);
