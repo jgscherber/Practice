@@ -87,15 +87,7 @@ public class GamePanel extends JPanel {
 	}
 
 	private void released() {
-		if(movingTiles != null) {
-			String s = movingTiles.toString();
-			int x = movingTiles.getX();
-			int y = movingTiles.getY();
-			TileSet newTileSet = new TileSet(s,x,y);
-			tileSets.add(0,newTileSet);
-			movingTiles = null;
-			repaint();
-		}		
+
 		// tile dropped on top of another - connect them
 		if(movingTiles != null) {
 			boolean addedToTiles = false;
@@ -106,9 +98,19 @@ public class GamePanel extends JPanel {
 					movingTiles = null;
 				}
 			}
+			
 		}
 		// not dropped on top of another - add back to list of tileSets
-		
+		if(movingTiles != null) {
+			String s = movingTiles.toString();
+			int x = movingTiles.getX();
+			int y = movingTiles.getY();
+			TileSet newTileSet = new TileSet(s,x,y);
+			tileSets.add(0,newTileSet);
+			movingTiles = null;
+			
+		}	
+		repaint();
 	}
 
 	private void clicked(int x, int y, boolean leftClicked) {

@@ -126,7 +126,8 @@ public class TileSet {
 				// check if they overlap other tiles
 				for(int i = 0; i < tiles.size() && !inserted; i++) {
 					int compareX = x + (i * LetterTile.SIZE);
-					if(droppedTilesLeft >- compareX && droppedTilesLeft <= (compareX + LetterTile.SIZE)) {
+					if(droppedTilesLeft >= compareX 
+							&& droppedTilesLeft <= (compareX + LetterTile.SIZE)) {
 						// insert after first overlapped tile
 						for(int j = 0; j < droppedTiles.getNumberofTiles(); j++) {
 							LetterTile tile = droppedTiles.getTile(j);
