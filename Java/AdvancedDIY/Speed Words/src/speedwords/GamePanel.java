@@ -26,6 +26,7 @@ public class GamePanel extends JPanel {
 	private static final String FILE_NAME = "/enable1_7.txt";
 	private ArrayList<TileSet> tileSets = new ArrayList<TileSet>();
 	private ArrayList<String> sevenLetterWords = new ArrayList<String>();
+	private ArrayList<String> formedWords = new ArrayList<String>();
 	
 	private Random rand = new Random();
 	
@@ -35,6 +36,7 @@ public class GamePanel extends JPanel {
 	private int mouseY;
 	
 	private SpeedWords speedWords;
+	private Dictionary dictionary = new Dictionary();
 	
 	public GamePanel(SpeedWords speedWords) {
 		this.speedWords = speedWords;
@@ -96,6 +98,7 @@ public class GamePanel extends JPanel {
 				addedToTiles = tileSet.insertTiles(movingTiles);
 				if(addedToTiles) {
 					movingTiles = null;
+					checkWord(tileSet);
 				}
 			}
 			
@@ -107,6 +110,7 @@ public class GamePanel extends JPanel {
 			int y = movingTiles.getY();
 			TileSet newTileSet = new TileSet(s,x,y);
 			tileSets.add(0,newTileSet);
+			checkWord(newTileSet);
 			movingTiles = null;
 			
 		}	
@@ -127,7 +131,9 @@ public class GamePanel extends JPanel {
 							movingTiles = tileSet.removeAndReturn1TileAt(mouseX, mouseY);
 							if(tileSet.getNumberofTiles() == 0) {
 								tileSets.remove(i);
-							}
+							} else {
+							    checkWord(tileSet);
+                            }
 						} else {
 							movingTiles = tileSet;
 							tileSets.remove(i);
@@ -138,10 +144,39 @@ public class GamePanel extends JPanel {
 				repaint();
 				
 			}// end null check
-		}
-	
-	
-	@Override
+		} // end clicked()
+
+    private void checkWord(TileSet tileSet) {
+	    String s = tileSet.toString();
+        boolean isAWord = dictionary.isAWord(s);
+        boolean foundBefore = formedWords.contains(s);
+        tileSet.setValid(isAWord);
+        if(isAWord && !foundBefore) {
+            int points = tileSet.getPoints();
+            // if first word, add it
+            // else insert the word before the first alphabetically less
+            // else add it to the end
+            // speedWords is the game instance assigned in the constructor
+            speedWords.addToScore(points);
+            speedWords.setWordList(formedWords);
+        }
+    }
+
+    public void restart() {
+        // removes existing tilesets, gets a new word, creates a tileset with it, adds it
+        tileSets.clear();
+        formedWords.clear();
+        int range = sevenLetterWords.size();
+        int choose = rand.nextInt(range);
+        String s = sevenLetterWords.get(choose);
+
+        TileSet tileSet = new TileSet(s, START_X, START_Y);
+        tileSets.add(tileSet);
+        checkWord(tileSet);
+        repaint();
+    }//end restart()
+
+    @Override
 	public void paintComponent(Graphics g) {
 		
 		
@@ -167,16 +202,6 @@ public class GamePanel extends JPanel {
 		return (new Dimension(WIDTH, HEIGHT));
 	}
 	
-	public void restart() {
-		// removes existing tilesets, gets a new word, creates a tileset with it, adds it
-		tileSets.clear();
-		int range = sevenLetterWords.size();
-		int choose = rand.nextInt(range);
-		String s = sevenLetterWords.get(choose);
-		
-		TileSet tileSet = new TileSet(s, START_X, START_Y);
-		tileSets.add(tileSet);
-		repaint();
-	}
+
 
 }

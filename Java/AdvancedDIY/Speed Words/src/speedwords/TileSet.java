@@ -1,6 +1,6 @@
 package speedwords;
 
-import java.awt.Graphics;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class TileSet {
@@ -9,6 +9,7 @@ public class TileSet {
 	private ArrayList<LetterTile> tiles = new ArrayList<LetterTile>();
 	private int x = 0;
 	private int y = 0;
+	private boolean valid = false;
 	
 	public TileSet(String word, int x, int y) {
 		// word must be all capital letters
@@ -23,6 +24,14 @@ public class TileSet {
 	}
 	
 	public void draw(Graphics g) {
+	    if(valid) {
+	        g.setColor(Color.YELLOW);
+	        int borderX = x - HIGHLIGHT_WIDTH;
+	        int borderY = y - HIGHLIGHT_WIDTH;
+	        int borderWidth = getWidth() + 2*HIGHLIGHT_WIDTH;
+	        int borderHeight = LetterTile.SIZE + 2*HIGHLIGHT_WIDTH;
+            g.fillRect(borderX, borderY, borderWidth, borderHeight);
+        }
 		for(int i = 0; i < getNumberofTiles(); i ++) {
 			LetterTile tile = getTile(i);
 			int xPos = x + (LetterTile.SIZE * i);
@@ -35,11 +44,25 @@ public class TileSet {
 		x += changeX;
 		y+= changeY;
 	}
-	
+
+	public int getPoints() {
+	    int points = 0;
+	    for(int i = 0; i < tiles.size(); i ++) {
+	        LetterTile tile = tiles.get(i);
+	        points += tile.getPoints();
+        }
+        points *= tiles.size();
+        return points;
+    }
+
 	private int getWidth() {
 		int width = getNumberofTiles() * LetterTile.SIZE;
 		return width;
 	}
+
+	public void setValid(boolean valid) {
+	    this.valid = valid;
+    }
 	
 	public boolean contains(int pointX, int pointY) {
 		boolean contains = false;

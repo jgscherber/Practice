@@ -38,7 +38,10 @@ public class Dictionary {
 		} catch (IOException e) {
 			String message = "Could not open: " + FILE_NAME;
 			JOptionPane.showMessageDialog(null, message);
-		}
+		} catch (NullPointerException e) {
+            String message = FILE_NAME + " not found";
+            JOptionPane.showMessageDialog(null, message);
+        }
 		
 	}// end Dictionary()
 	
@@ -63,4 +66,4 @@ public class Dictionary {
 	
 	
 	
-}
+} // end class

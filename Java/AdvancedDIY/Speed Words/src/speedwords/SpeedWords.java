@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Insets;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -73,6 +74,19 @@ public class SpeedWords extends JFrame {
 		mainPanel.add(scrollPane);
 	}
 
+	public void setWordList(ArrayList<String> wordList) {
+	    String s = "";
+	    for(int i = 0; i < wordList.size(); i++) {
+	        String word = wordList.get(i);
+	        s += word + "\n";
+        }
+        textArea.setText(s);
+    }
+
+	public void addToScore(int newPoints) {
+	    //scorePanel from myComponents package
+	    scorePanel.addToScore(newPoints);
+    }
 
 	public static void main(String[] args) {
 		String className = UIManager.getCrossPlatformLookAndFeelClassName();
