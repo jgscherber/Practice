@@ -34,6 +34,7 @@ public class GamePanel extends JPanel {
 	private TileSet movingTiles;
 	private int mouseX;
 	private int mouseY;
+    private boolean outOfTime = false;
 	
 	private SpeedWords speedWords;
 	private Dictionary dictionary = new Dictionary();
@@ -120,7 +121,7 @@ public class GamePanel extends JPanel {
 	private void clicked(int x, int y, boolean leftClicked) {
 		
 			// no other movingTiles already selected
-			if(movingTiles == null) {
+			if(movingTiles == null && !outOfTime) {
 				mouseX = x;
 				mouseY = y;
 				
@@ -193,9 +194,16 @@ public class GamePanel extends JPanel {
         TileSet tileSet = new TileSet(s, START_X, START_Y);
         tileSets.add(tileSet);
         checkWord(tileSet);
+        outOfTime = false;
+        movingTiles = null;
         repaint();
     }//end restart()
 
+    public void setOutOfTime(boolean outOfTime) {
+	    this.outOfTime = outOfTime;
+    }
+
+    // overrides
     @Override
 	public void paintComponent(Graphics g) {
 		
@@ -221,7 +229,5 @@ public class GamePanel extends JPanel {
 	public Dimension getPreferredSize() {
 		return (new Dimension(WIDTH, HEIGHT));
 	}
-	
 
-
-}
+}// end class
