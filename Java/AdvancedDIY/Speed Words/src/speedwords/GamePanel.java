@@ -150,15 +150,35 @@ public class GamePanel extends JPanel {
 	    String s = tileSet.toString();
         boolean isAWord = dictionary.isAWord(s);
         boolean foundBefore = formedWords.contains(s);
-        tileSet.setValid(isAWord);
+
         if(isAWord && !foundBefore) {
+            tileSet.setValid(true);
             int points = tileSet.getPoints();
-            // if first word, add it
-            // else insert the word before the first alphabetically less
-            // else add it to the end
-            // speedWords is the game instance assigned in the constructor
             speedWords.addToScore(points);
+            // if first word, add it
+            if(formedWords.size() == 0) {
+                formedWords.add(s);
+            } else {
+                // else insert the word before the first alphabetically less
+                boolean added = false;
+                for(int i = 0; i < formedWords.size() && !added; i++) {
+                    String formedWord = formedWords.get(i);
+                    int difference = formedWord.compareTo(s);
+                    if (difference > 0) {
+                        formedWords.add(i, s);
+                        added = true;
+                    }
+                }
+                // else add it to the end
+                if (!added) {
+                    formedWords.add(s);
+                }
+            }
+            // speedWords is the game instance assigned in the constructor
+
             speedWords.setWordList(formedWords);
+        } else {
+            tileSet.setValid(false);
         }
     }
 
