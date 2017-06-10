@@ -38,6 +38,10 @@ public class MatchThree extends JFrame {
 
     }
 
+    public void addToScore(int newPoints) {
+        scorePanel.addToScore(newPoints);
+    }
+
     public static void main(String[] args) {
         try {
             String className = UIManager.getCrossPlatformLookAndFeelClassName();

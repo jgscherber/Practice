@@ -98,19 +98,90 @@ public class BallPanel extends JPanel{
     }
 
     // scoring
+
     private int markChainsAndGetPointsInRow(int row) {
         int points = 0;
         // get first ball
-
+        int color = cells[row][0].getColor();
+        int count = 1;
         // loop through each column
+        for(int col = 1; col < COLS; col++) {
+            // marks chains of 3 or more
+            int nextColor = cells[row][col].getColor();
+            if (nextColor == color) count++;
+            else{
+                points += calculatePoints(count);
+                color = nextColor;
+                count = 1;
+            }
+            if (count == 3) {
+                cells[row][col].setInChain(true);
+                cells[row][col-1].setInChain(true);
+                cells[row][col-2].setInChain(true);
+            } else if (count > 3) {
+                cells[row][col].setInChain(true);
+            }
 
-        // marks chains of 3 or more
-        
+        }
+        points += calculatePoints(count);
         return points;
+    }
+
+    private int markChainsAndGetPointsInCol(int col) {
+        int points = 0;
+        // get first ball
+        int color = cells[0][col].getColor();
+        int count = 1;
+        // loop through each column
+        for(int row = 1; row < ROWS; row++) {
+            // marks chains of 3 or more
+            int nextColor = cells[row][col].getColor();
+            if (nextColor == color) count++;
+            else{
+                points += calculatePoints(count);
+                color = nextColor;
+                count = 1;
+            }
+            if (count == 3) {
+                cells[row][col].setInChain(true);
+                cells[row-1][col].setInChain(true);
+                cells[row-2][col].setInChain(true);
+            } else if (count > 3) {
+                cells[row][col].setInChain(true);
+            }
+
+        }
+        points = calculatePoints(count);
+        return points;
+    }
+
+    private int calculatePoints(int count) {
+        int points = 0;
+        if( count == 3) {
+            points = 10;
+        } else if (count == 4) {
+            points = 15;
+        } else if (count > 4) {
+            points = 20;
+        }
+        return points;
+    }
+
+    private void removeMarkedChains(){
+        for(int row = 0; row < ROWS; row++) {
+            for(int col = 0; col < COLS; col++) {
+                Cell temp = cells[row][col];
+                if (temp.isInChain()) {
+                    temp.setEmpty();
+                }
+            }
+        }
+        repaint();
     }
 
 
     // swapping code
+
     private void mouseMovedTo(int x, int y) {
         int direction = getSwapDirection(x, y);
         switch (direction) {
@@ -193,7 +264,19 @@ public class BallPanel extends JPanel{
         temp.copy(cells[row1][col1]);
         cells[row1][col1].copy(cells[row2][col2]);
         cells[row2][col2].copy(temp);
+
+        int points = 0;
+        for(int row = 0; row < ROWS; row++) {
+            points += markChainsAndGetPointsInRow(row);
+        }
+        for(int col = 0; col < COLS; col++) {
+            points += markChainsAndGetPointsInCol(col);
+        }
         repaint(); // now have new colors
+        if (points > 0) {
+            game.addToScore(points);
+            removeMarkedChains();
+        }
     }
 
     // over-rides
