@@ -15,6 +15,32 @@ public class Cell {
         color = rand.nextInt(COLORS.length);
     }
 
+    public void copy(Cell cell) {
+        color = cell.getColor();
+        inChain = false;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setEmpty() {
+        color = -1;
+        inChain = false;
+    }
+
+    public boolean isEmpty() {
+        return color == -1;
+    }
+
+    public boolean isInChain() {
+        return inChain;
+    }
+
+    public void setInChain(boolean inChain) {
+        this.inChain = inChain;
+    }
+
     public void draw(Graphics g, int x, int y) {
         // DRAWING BACKGROUND
         if(inChain) {

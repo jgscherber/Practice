@@ -10,6 +10,7 @@ import java.awt.*;
 public class MatchThree extends JFrame {
 
     private ScorePanel scorePanel = new ScorePanel(0, Color.GREEN);
+    private BallPanel ballPanel = new BallPanel(this);
 
     public MatchThree() {
         initGUI();
@@ -32,7 +33,7 @@ public class MatchThree extends JFrame {
         // SCORE PANEL
         mainPanel.add(scorePanel);
         // BALL PANEL
-
+        mainPanel.add(ballPanel);
         // BUTTON PANEL
 
     }
