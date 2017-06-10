@@ -54,6 +54,63 @@ public class BallPanel extends JPanel{
 
     }
 
+    // ball placement
+    private void setInitialBalls() {
+        for(int row = 0; row < ROWS; row++) {
+            for(int col = 0; col < COLS; col++) {
+                cells[row][col] = new Cell();
+                // can only do above and to left while instantiating, others don't
+                // exist yet
+                while (twoMatchAbove(row, col) || twoMatchToLeft(row, col)) {
+                    cells[row][col] = new Cell();
+                }
+            }
+        }
+        repaint();
+    }
+
+    private boolean twoMatchAbove(int row, int col) {
+        boolean match = false;
+        if (row > 1 && row < ROWS &&
+                col >= 0 && col < COLS) {
+            int color1 = cells[row][col].getColor();
+            int color2 = cells[row-1][col].getColor();
+            int color3 = cells[row-2][col].getColor();
+            if (color1 == color2 && color1 == color3) {
+                match = true;
+            }
+        }
+        return match;
+    }
+
+    private boolean twoMatchToLeft(int row, int col) {
+        boolean match = false;
+        if (row >= 0 && row < ROWS &&
+                col > 1 && col < COLS) {
+            int color1 = cells[row][col].getColor();
+            int color2 = cells[row][col-1].getColor();
+            int color3 = cells[row][col-2].getColor();
+            if (color1 == color2 && color1 == color3) {
+                match = true;
+            }
+        }
+        return match;
+    }
+
+    // scoring
+    private int markChainsAndGetPointsInRow(int row) {
+        int points = 0;
+        // get first ball
+
+        // loop through each column
+
+        // marks chains of 3 or more
+        
+        return points;
+    }
+
+
+    // swapping code
     private void mouseMovedTo(int x, int y) {
         int direction = getSwapDirection(x, y);
         switch (direction) {
@@ -90,15 +147,6 @@ public class BallPanel extends JPanel{
                 swap(row,col,row+1, col);
                 break;
         }
-    }
-
-    private void setInitialBalls() {
-        for(int row = 0; row < ROWS; row++) {
-            for(int col = 0; col < COLS; col++) {
-                cells[row][col] = new Cell();
-            }
-        }
-        repaint();
     }
 
     private int getSwapDirection(int x, int y) {
@@ -148,6 +196,7 @@ public class BallPanel extends JPanel{
         repaint(); // now have new colors
     }
 
+    // over-rides
     public void paintComponent(Graphics g) {
         // background
         g.setColor(Color.BLACK);
