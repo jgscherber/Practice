@@ -168,6 +168,9 @@ public class BallPanel extends JPanel{
     }
 
     private void removeMarkedChains(){
+        // pausing before clear
+        pause(1000);
+        // remove marked chains
         for(int row = 0; row < ROWS; row++) {
             for(int col = 0; col < COLS; col++) {
                 Cell temp = cells[row][col];
@@ -177,7 +180,37 @@ public class BallPanel extends JPanel{
             }
         }
         repaint();
-    }
+        pause(500);
+        // loop through rows and columns starting at the bottom
+        for(int row = ROWS-1; row > -1; row--) {
+            boolean foundEmptyInCol = false;
+            for(int col = 0; col < COLS; col++) {
+                // if empty, copy the first non-empty cell above it
+                if (cells[row][col].isEmpty()) {
+                    foundEmptyInCol = true;
+                    boolean foundBall = false;
+                    for(int r = row - 1; row >= 0 && !foundBall; r--) {
+                        if (!cells[r][col].isEmpty()) {
+                            cells[row][col].copy(cells[r][col]);
+                            cells[r][col].setEmpty();
+                            foundBall = true;
+                        }
+                    }
+                    // if none above, refill with new
+                    if (!foundBall) {
+                        cells[row][col] = new Cell();
+                    }
+                }
+
+
+            }
+            // repaint and pause after each row (for effect)
+            repaint();
+            if (foundEmptyInCol) {
+                pause(500);
+            }
+        }
+    } // end removeMarkedChains()
 
 
     // swapping code
@@ -260,26 +293,42 @@ public class BallPanel extends JPanel{
     }
 
     private void swap(int row1, int col1, int row2, int col2) {
-        Cell temp = new Cell();
-        temp.copy(cells[row1][col1]);
-        cells[row1][col1].copy(cells[row2][col2]);
-        cells[row2][col2].copy(temp);
 
-        int points = 0;
-        for(int row = 0; row < ROWS; row++) {
-            points += markChainsAndGetPointsInRow(row);
-        }
-        for(int col = 0; col < COLS; col++) {
-            points += markChainsAndGetPointsInCol(col);
-        }
-        repaint(); // now have new colors
-        if (points > 0) {
-            game.addToScore(points);
-            removeMarkedChains();
-        }
+        // inline class definition
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Cell temp = new Cell();
+                temp.copy(cells[row1][col1]);
+                cells[row1][col1].copy(cells[row2][col2]);
+                cells[row2][col2].copy(temp);
+
+                int points = 0;
+                for(int row = 0; row < ROWS; row++) {
+                    points += markChainsAndGetPointsInRow(row);
+                }
+                for(int col = 0; col < COLS; col++) {
+                    points += markChainsAndGetPointsInCol(col);
+                }
+                repaint(); // now have new colors
+                if (points > 0) {
+                    game.addToScore(points);
+                    removeMarkedChains();
+                }
+            }
+        }).start();
     }
 
+
+
+
     // over-rides
+    private void pause(int milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) { }
+    }
+
     public void paintComponent(Graphics g) {
         // background
         g.setColor(Color.BLACK);
