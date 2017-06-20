@@ -58,27 +58,28 @@ public class TimerPanel extends JPanel implements Runnable {
 	
 	// threading code
 	
-	public void start() { 
+	public void start() {
 		// if allow thread creation when one exists, can start multiple threads each time it's clicked
 		// stopping and restarting thread decrements causes run() to be started repeatedly
 		if(timerThread == null 
-				|| !timerThread.isAlive()) { 
-			timerThread = new Thread(this);
+				|| !timerThread.isAlive()) {
+
+            timerThread = new Thread(this);
 			// JVM calls the run() method of the Runnable on a new thread
 			// timerPanel has the thread sleep while the other thread continues
-			timerThread.start(); 
+            timerThread.start();
 		}
+
 	}
-	
+
 	public void run() {
 		while(time > 0) {
+
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) { return; } // thrown when the interrupt() is called below
 			time -= 1;
 			setTime(time);
-
-			
 		}
 		timesUp();
 	}
@@ -91,7 +92,7 @@ public class TimerPanel extends JPanel implements Runnable {
 	
 	@Override
 	protected void paintComponent(Graphics g) {
-		super.paintComponent(g); // why nee super this time??
+		super.paintComponent(g); // why need super this time??
 		
 		g.setColor(Color.BLACK);
 		g.drawString(timeString, 0, height); // (0,0) must be at bottom-left
@@ -108,7 +109,7 @@ public class TimerPanel extends JPanel implements Runnable {
 			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
-			clip.start();			
+			clip.start();
 		} catch(IOException e) {	
 			String message = "File cannot be opened";
 			JOptionPane.showMessageDialog(this, message);
@@ -117,6 +118,7 @@ public class TimerPanel extends JPanel implements Runnable {
 		} catch (LineUnavailableException e) {
 			
 		}
+
 		String message = "Time's up!";
 		JOptionPane.showMessageDialog(this, message);		
 	}	

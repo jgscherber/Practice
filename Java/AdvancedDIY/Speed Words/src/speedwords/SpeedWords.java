@@ -6,13 +6,9 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Insets;
+import java.util.ArrayList;
 
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.UIManager;
+import javax.swing.*;
 
 import jacob.scherber.mycomponents.*;
 
@@ -21,9 +17,11 @@ public class SpeedWords extends JFrame {
 	
 	public static final Color TAN = new Color(222, 191, 168);
 	private static final Font LIST_FONT = new Font(Font.DIALOG,Font.BOLD, 14);
+	private int timeLength = 20;
+
 	
 	private ScorePanel scorePanel = new ScorePanel(0 , TAN);	
-	private SpeedWordsTimerPanel swTimerPanel = new SpeedWordsTimerPanel(this, 60);
+	private SpeedWordsTimerPanel swTimerPanel = new SpeedWordsTimerPanel(this, timeLength);
 	private JTextArea textArea = new JTextArea();
 	private GamePanel gamePanel = new GamePanel(this);
 	
@@ -35,6 +33,7 @@ public class SpeedWords extends JFrame {
 		setLocationRelativeTo(null);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		swTimerPanel.start();
 	}
 	
 	
@@ -73,6 +72,21 @@ public class SpeedWords extends JFrame {
 		mainPanel.add(scrollPane);
 	}
 
+	public void setWordList(ArrayList<String> wordList) {
+	    String s = "";
+	    for(int i = 0; i < wordList.size(); i++) {
+	        String word = wordList.get(i);
+	        s += word + "\n";
+        }
+        textArea.setText(s);
+    }
+
+	public void addToScore(int newPoints) {
+	    //scorePanel from myComponents package
+	    scorePanel.addToScore(newPoints);
+    }
+
+
 
 	public static void main(String[] args) {
 		String className = UIManager.getCrossPlatformLookAndFeelClassName();
@@ -91,4 +105,20 @@ public class SpeedWords extends JFrame {
 
 	}
 
+    public void outOfTime() {
+	    gamePanel.setOutOfTime(true);
+
+        String message = "Do you want to play again?";
+        int option = JOptionPane.showConfirmDialog(this, message,
+                "Play again?", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            textArea.setText("");
+            scorePanel.reset();
+            gamePanel.restart();
+            swTimerPanel.setTime(timeLength);
+            swTimerPanel.run();
+        } else {
+            System.exit(0);
+        }
+    }
 }

@@ -26,6 +26,7 @@ public class GamePanel extends JPanel {
 	private static final String FILE_NAME = "/enable1_7.txt";
 	private ArrayList<TileSet> tileSets = new ArrayList<TileSet>();
 	private ArrayList<String> sevenLetterWords = new ArrayList<String>();
+	private ArrayList<String> formedWords = new ArrayList<String>();
 	
 	private Random rand = new Random();
 	
@@ -33,8 +34,10 @@ public class GamePanel extends JPanel {
 	private TileSet movingTiles;
 	private int mouseX;
 	private int mouseY;
+    private boolean outOfTime = false;
 	
 	private SpeedWords speedWords;
+	private Dictionary dictionary = new Dictionary();
 	
 	public GamePanel(SpeedWords speedWords) {
 		this.speedWords = speedWords;
@@ -96,6 +99,7 @@ public class GamePanel extends JPanel {
 				addedToTiles = tileSet.insertTiles(movingTiles);
 				if(addedToTiles) {
 					movingTiles = null;
+					checkWord(tileSet);
 				}
 			}
 			
@@ -107,6 +111,7 @@ public class GamePanel extends JPanel {
 			int y = movingTiles.getY();
 			TileSet newTileSet = new TileSet(s,x,y);
 			tileSets.add(0,newTileSet);
+			checkWord(newTileSet);
 			movingTiles = null;
 			
 		}	
@@ -116,7 +121,7 @@ public class GamePanel extends JPanel {
 	private void clicked(int x, int y, boolean leftClicked) {
 		
 			// no other movingTiles already selected
-			if(movingTiles == null) {
+			if(movingTiles == null && !outOfTime) {
 				mouseX = x;
 				mouseY = y;
 				
@@ -127,7 +132,9 @@ public class GamePanel extends JPanel {
 							movingTiles = tileSet.removeAndReturn1TileAt(mouseX, mouseY);
 							if(tileSet.getNumberofTiles() == 0) {
 								tileSets.remove(i);
-							}
+							} else {
+							    checkWord(tileSet);
+                            }
 						} else {
 							movingTiles = tileSet;
 							tileSets.remove(i);
@@ -138,10 +145,66 @@ public class GamePanel extends JPanel {
 				repaint();
 				
 			}// end null check
-		}
-	
-	
-	@Override
+		} // end clicked()
+
+    private void checkWord(TileSet tileSet) {
+	    String s = tileSet.toString();
+        boolean isAWord = dictionary.isAWord(s);
+        boolean foundBefore = formedWords.contains(s);
+
+        if(isAWord && !foundBefore) {
+            tileSet.setValid(true);
+            int points = tileSet.getPoints();
+            speedWords.addToScore(points);
+            // if first word, add it
+            if(formedWords.size() == 0) {
+                formedWords.add(s);
+            } else {
+                // else insert the word before the first alphabetically less
+                boolean added = false;
+                for(int i = 0; i < formedWords.size() && !added; i++) {
+                    String formedWord = formedWords.get(i);
+                    int difference = formedWord.compareTo(s);
+                    if (difference > 0) {
+                        formedWords.add(i, s);
+                        added = true;
+                    }
+                }
+                // else add it to the end
+                if (!added) {
+                    formedWords.add(s);
+                }
+            }
+            // speedWords is the game instance assigned in the constructor
+
+            speedWords.setWordList(formedWords);
+        } else {
+            tileSet.setValid(false);
+        }
+    }
+
+    public void restart() {
+        // removes existing tilesets, gets a new word, creates a tileset with it, adds it
+        tileSets.clear();
+        formedWords.clear();
+        int range = sevenLetterWords.size();
+        int choose = rand.nextInt(range);
+        String s = sevenLetterWords.get(choose);
+
+        TileSet tileSet = new TileSet(s, START_X, START_Y);
+        tileSets.add(tileSet);
+        checkWord(tileSet);
+        outOfTime = false;
+        movingTiles = null;
+        repaint();
+    }//end restart()
+
+    public void setOutOfTime(boolean outOfTime) {
+	    this.outOfTime = outOfTime;
+    }
+
+    // overrides
+    @Override
 	public void paintComponent(Graphics g) {
 		
 		
@@ -166,17 +229,5 @@ public class GamePanel extends JPanel {
 	public Dimension getPreferredSize() {
 		return (new Dimension(WIDTH, HEIGHT));
 	}
-	
-	public void restart() {
-		// removes existing tilesets, gets a new word, creates a tileset with it, adds it
-		tileSets.clear();
-		int range = sevenLetterWords.size();
-		int choose = rand.nextInt(range);
-		String s = sevenLetterWords.get(choose);
-		
-		TileSet tileSet = new TileSet(s, START_X, START_Y);
-		tileSets.add(tileSet);
-		repaint();
-	}
 
-}
+}// end class

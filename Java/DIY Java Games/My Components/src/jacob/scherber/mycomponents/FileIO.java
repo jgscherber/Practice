@@ -27,13 +27,13 @@ public class FileIO {
 			clip.open(audioInputStream);
 			clip.start();	
 		} catch(IOException e) {	
-			String message = "File cannot be opened.";
+			String message = "File cannot be opened: " + fileName;
 			JOptionPane.showMessageDialog(null, message);
 		} catch (UnsupportedAudioFileException e) { // must be .wav or .au
-			String message = "File type is unsupported.";
+			String message = "File type is unsupported: " + fileName;
 			JOptionPane.showMessageDialog(null, message);
 		} catch (LineUnavailableException e) {
-			String message = "Resources are not available to open the file.";
+			String message = "Resources are not available to open the file: " + fileName;
 			JOptionPane.showMessageDialog(null, message);
 		}
 		
@@ -46,7 +46,7 @@ public class FileIO {
 			// getClass() to get runtime class of object
 			InputStream input = requestor.getClass().getResourceAsStream(fileName);
 			if(input == null) {
-				String message = "File not found.";
+				String message = "File not found: " + fileName;
 				JOptionPane.showMessageDialog(null, message);
 			} else {
 				image = ImageIO.read(input);
