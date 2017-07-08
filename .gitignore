@@ -1,3 +1,6 @@
+# ========================= #
+# Operating System Files    #
+# ========================= #
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
@@ -18,16 +21,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 index.html
-# =========================
-# Operating System Files
-# =========================
-
-# OSX
-# =========================
-
-.DS_Store
-.AppleDouble
-.LSOverride
 
 # Thumbnails
 ._*
@@ -41,18 +34,19 @@ index.html
 .VolumeIcon.icns
 
 # Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
 Network Trash Folder
 Temporary Items
 .apdisk
-# Personal
+
+# ============ #
+#  Personal    #
+# ============ #
 
 Youtube 60fps search.txt
 
-# Created by https://www.gitignore.io/api/eclipse
-
-### Eclipse ###
+# =============== #
+#    Eclipse      #
+# =============== #
 p5.dom.js
 p5.sound.js
 .metadata
@@ -108,7 +102,9 @@ local.properties
 
 # End of https://www.gitignore.io/api/eclipse
 
-#Android Studio stuff
+# =============== #
+# Android Studio  #
+# =============== #
 .gradle
 .DS_Store
 
@@ -152,4 +148,35 @@ project.properties
 ##Gradle-based build
 .gradle
 Java\Android\StudioProjects\Sunshine-Version-2\build\
+
+# =============== #
+# Unity generated #
+# =============== #
+[Tt]emp/
+[Oo]bj/
+[Bb]uild
+/[Bb]uilds/
+/[Ll]ibrary/
+sysinfo.txt
+*.stackdump
+/Assets/AssetStoreTools*
+*.apk
+*.unitypackage
+ 
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+[Ee]xported[Oo]bj/
+.vs/
+/*.userprefs
+/*.csproj
+/*.pidb
+*.pidb.meta
+/*.suo
+/*.user
+/*.unityproj
+/*.booproj
+.consulo/
+/*.tmp
+/*.svd
 p5.js
