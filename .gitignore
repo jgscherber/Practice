@@ -183,6 +183,6 @@ Unity/*/*.user
 Unity/*/*.unityproj
 Unity/*/*.booproj
 .consulo/
-/*.tmp
-/*.svd
+Unity/*/*.tmp
+Unity/*/*.svd
 p5.js
