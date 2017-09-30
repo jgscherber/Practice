@@ -1,0 +1,2 @@
+MAILTO="jgscherber@gmail.com"
+0 18 * * * xvfb-run python /home/jacob/Documents/budget/CC_check.py
