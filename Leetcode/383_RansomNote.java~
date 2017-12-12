@@ -1,0 +1,8 @@
+class Solution {
+    public boolean canConstruct(String ransomNote, String magazine) {
+	// are they sorted?
+        Map<String, Integer> counts = new HaspMap<>();
+	
+        
+    }
+}
