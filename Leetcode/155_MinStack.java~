@@ -1,0 +1,51 @@
+class MinStack {
+
+    ArrayList<Integer> stack;
+    ArrayList<Integer> minIndexes;
+    ArrayList<Integer> minValues;
+    int minIndex;
+    int minValue;
+
+    /** initialize your data structure here. */
+    public MinStack() {
+	// underlying data structure
+        stack = new ArrayList<>();
+	// track replaced min values
+	minIndexes = new ArrayList<>();
+	minValues  = new ArrayList<>();
+	// need index track to know when min has left stack
+	// and where in stack next min is located
+        minIndex = -1;
+        minValue = Integer.MIN_VALUE;
+    }
+    
+    public void push(int x) {
+        stack.insert(0,x);
+	minIndex++;
+	if(x < minValue) {
+	    minIndex = 0;
+	    minValue =
+	}
+    }
+    
+    public void pop() {
+        
+    }
+    
+    public int top() {
+        
+    }
+    
+    public int getMin() {
+        return minValue;
+    }
+}
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(x);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
