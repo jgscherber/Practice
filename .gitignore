@@ -185,4 +185,10 @@ Unity/*/*.booproj
 .consulo/
 Unity/*/*.tmp
 Unity/*/*.svd
+*.meta
+
+# Processing library
 p5.js
+
+# secret info
+TwitterBot/login_info.txt

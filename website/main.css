@@ -1,0 +1,18 @@
+body {
+            margin-top: 20px;
+            background-color: #eee;
+        }
+
+
+
+.img_center {
+    display: flex;
+    margin:0 auto;
+    justify-content: center;
+    align-content: flex-start;
+    flex-wrap: wrap;
+}
+
+#linkedin-logo {
+    padding-left: 10px;
+}
