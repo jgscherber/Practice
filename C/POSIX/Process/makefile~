@@ -1,0 +1,2 @@
+procc:procc.c
+	gcc -g -o procc procc.c
